@@ -26,16 +26,16 @@ SlotsLoseShow = ["💀 • 💀 • 💀"] + ["💵 • 💀 • 💀"] + ["💀
 
 DiceSmallWin = 1.35
 DiceMediumWin = 2.15
-DiceMaxWin = 7.5
+DiceMaxWin = 15
 
 DiceRollMax = 100
 DiceRollMedium = 90
-DiceRollSmall = 60
-DiceRollLose = 59
+DiceRollSmall = 55
+DiceRollLose = 54
 
 EggJackpotWin = 25
-EggSmallRangeWin = 8
-EggMainRangeWin = 3
+EggSmallRangeWin = 5
+EggMainRangeWin = 2.25
 EggMainWin = 1.5
 
 EggSmallRange = 5
