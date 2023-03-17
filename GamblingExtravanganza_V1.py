@@ -5,6 +5,11 @@ import time
 import os
 import math
 
+# --Updates
+
+UpdateLog = ["• Added Log", "• Balanced Multipliers", "• Increased Rolldice Chances"]
+UpdateVersion = "1.0"
+
 # --Settings
 
 MoneyIcon = "💵"
@@ -532,6 +537,27 @@ def PrintInfo(DoClear):
 
 
 # --Game
+
+Clear()
+
+print("• Welcome To Gambling Extravaganza •")
+print()
+print("• Made by - RoGamxr#1663")
+print("• Discord Invite - http://discord.gg/xE3z4QyBWG")
+print("• Version -", UpdateVersion)
+
+for i in range(3):
+  print()
+
+print("• UPDATE LOG •")
+print()
+
+for UpdateText in range(len(UpdateLog)):
+  print(UpdateLog[UpdateText])
+
+print()
+input("Press enter to continue: ")
+
 
 if not os.path.exists("GamblingData_V1.txt"):
   PlayerMoney = StartMoney
