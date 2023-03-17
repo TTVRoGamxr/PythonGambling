@@ -424,6 +424,18 @@ def BetEgg(BetAmount, Egg):
 
         if EggMin != 0 and EggMax != 0:
           RandomEggJackpot = random.randint(EggMin, EggMax)
+        
+        if RandomEggJackpot - 12 < EggMin:
+          EggMin = RandomEggJackpot - 12
+
+        if RandomEggJackpot + 12 > EggMax:
+          EggMax = RandomEggJackpot + 12
+        
+        if EggMin < 1:
+          EggMin = 1
+        
+        if EggMax > 100:
+          EggMax = 100
 
         Clear()
 
