@@ -7,8 +7,8 @@ import math
 
 # --Updates
 
-UpdateLog = ["• Rebalanced Crates", "• 1 New Crate"]
-UpdateVersion = "1.1b2"
+UpdateLog = ["• Rebalanced Crates", "• Added Crate Content"]
+UpdateVersion = "1.1b3"
 
 # --Special
 
@@ -47,12 +47,12 @@ Crate4Values = [2000, 2500, 6000, 15000]
 Crate4Chances = ["Goofy Mask"]*60 + ["Shady Fedore"]*50 + ["Ancient Metal Bit"]*10 + ["Glowing Orb"]*3
 
 Crate5Items = ["Cape of Disguise", "Forbidden Ring", "Mega Ancient Jewel", "Ruby of the Gods"]
-Crate5Values = [4000, 5500, 12500, 750000]
-Crate5Chances = ["Cape of Disguise"]*1500 + ["Forbidden Ring"]*750 + ["Mega Ancient Jewel"]*20 + ["Ruby of the Gods"]*6
+Crate5Values = [4000, 5500, 12500, 450000]
+Crate5Chances = ["Cape of Disguise"]*1500 + ["Forbidden Ring"]*750 + ["Mega Ancient Jewel"]*20 + ["Ruby of the Gods"]*4
 
-Crate6Items = ["Weapon of the Gods", "Godly Orb", "Godly Jewel", "Ruby of the Gods"]
-Crate6Values = [5250, 7500, 15000, 750000]
-Crate6Chances = ["Weapon of the Gods"]*1420 + ["Godly Orb"]*550 + ["Godly Jewel"]*50 + ["Ruby of the Gods"]*15
+Crate6Items = ["Weapon of the Gods", "Godly Orb", "Godly Jewel", "Ruby Pendant", "Unknown Matter???"]
+Crate6Values = [5250, 7500, 15000, 175000, 1000000]
+Crate6Chances = ["Weapon of the Gods"]*1750 + ["Godly Orb"]*630 + ["Godly Jewel"]*75 + ["Ruby Pendant"]*13 + ["Unknown Matter???"]
 
 SlotsChances = ["JACKPOT"] + ["BIG WINNER"]*14 + ["WINNER"]*25 + ["LOSER"]*60
 SlotsJackpotShow = "💶  • 💶  • 💶"
