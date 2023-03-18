@@ -473,8 +473,8 @@ def BetEgg(BetAmount, Egg):
         EggMax = 0
         RandomEggJackpot = 75
 
-        R1 = random.randint(10, 20)
-        R2 = random.randint(10, 20)
+        R1 = random.randint(5, 14)
+        R2 = random.randint(5, 14)
 
         RandomEggJackpot = random.randint(1, 100)
         EggMin = RandomEggJackpot
