@@ -7,8 +7,8 @@ import math
 
 # --Updates
 
-UpdateLog = ["• Rebalanced Crates", "• +2 New Crates", "• ???"]
-UpdateVersion = "1.1b4"
+UpdateLog = ["• Reworked Egg", "• Made Gambling Cap 50K", "• Bug Fixes"]
+UpdateVersion = "1.2"
 
 # --Special
 
@@ -21,7 +21,7 @@ InsuranceIcon = "🩹"
 SpinsIcon = "💫"
 
 MinBet = 10
-MaxBet = 100000
+MaxBet = 50000
 
 SlotsSmallWin = 1.25
 SlotsMediumWin = 1.75
@@ -473,28 +473,18 @@ def BetEgg(BetAmount, Egg):
         EggMax = 0
         RandomEggJackpot = 75
 
-        def ChooseRange():
-          R1 = random.randint(1, 100)
-          R2 = random.randint(1, 100)
+        R1 = random.randint(10, 20)
+        R2 = random.randint(10, 20)
 
-          if R1 > R2:
-            return ChooseRange()
-
-          else:
-            return R1, R2
-
-        New1, New2 = ChooseRange()
-        EggMin = New1
-        EggMax = New2
-
-        if EggMin != 0 and EggMax != 0:
-          RandomEggJackpot = random.randint(EggMin, EggMax)
+        RandomEggJackpot = random.randint(1, 100)
+        EggMin = RandomEggJackpot
+        EggMax = RandomEggJackpot
         
-        if RandomEggJackpot - 12 < EggMin:
-          EggMin = RandomEggJackpot - 12
+        if RandomEggJackpot - R1 < EggMin:
+          EggMin = RandomEggJackpot - R1
 
-        if RandomEggJackpot + 12 > EggMax:
-          EggMax = RandomEggJackpot + 12
+        if RandomEggJackpot + R2 > EggMax:
+          EggMax = RandomEggJackpot + R2
         
         if EggMin < 1:
           EggMin = 1
