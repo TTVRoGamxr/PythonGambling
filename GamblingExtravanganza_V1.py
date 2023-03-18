@@ -77,10 +77,10 @@ DiceRollMedium = 90
 DiceRollSmall = 55
 DiceRollLose = 54
 
-EggJackpotWin = 25
-EggSmallRangeWin = 5
-EggMainRangeWin = 2.25
-EggMainWin = 1.5
+EggJackpotWin = 17.5
+EggSmallRangeWin = 3.25
+EggMainRangeWin = 1.75
+EggMainWin = 1.35
 
 EggSmallRange = 5
 EggMainRange = 10
