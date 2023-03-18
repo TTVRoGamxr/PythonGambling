@@ -7,12 +7,12 @@ import math
 
 # --Updates
 
-UpdateLog = ["• Reworked Egg", "• Made Gambling Cap 50K", "• Bug Fixes"]
-UpdateVersion = "1.2b"
+UpdateLog = ["• Added Total Spins Tracker", "• Stat Reset"]
+UpdateVersion = "1.3"
 
 # --Special
 
-SpecialShoutouts = ["• CesarTheGamer#2616"]
+SpecialShoutouts = ["• CesarTheGamer#2616", "• Skyo#2007"]
 
 # --Settings
 
@@ -28,7 +28,7 @@ SlotsMediumWin = 1.75
 SlotsMaxWin = 15
 
 CrateNames = ["Basic", "Rare", "Epic", "Legendary", "Ruby", "Godly", "Void", "Unknown"]
-CratePrices = [300, 750, 1500, 3000, 5000, 6000, 10000, 15000]
+CratePrices = [300, 750, 1500, 3000, 5000, 6000, 10000, 15000, 1750]
 
 Crate1Items = ["Tool", "Cheese", "Green Stick", "Stack of Money"]
 Crate1Values = [125, 200, 315, 500]
@@ -51,11 +51,11 @@ Crate5Values = [4000, 5500, 12500, 275000]
 Crate5Chances = ["Cape of Disguise"]*1500 + ["Forbidden Ring"]*750 + ["Mega Ancient Jewel"]*20 + ["Ruby of the Gods"]*4
 
 Crate6Items = ["Weapon of the Gods", "Godly Orb", "Godly Jewel", "Godly Pendant", "Godly Matter"]
-Crate6Values = [3250, 5500, 9000, 175000, 300000]
+Crate6Values = [3250, 5500, 9000, 100000, 300000]
 Crate6Chances = ["Weapon of the Gods"]*1750 + ["Godly Orb"]*630 + ["Godly Jewel"]*75 + ["Godly Pendant"]*13 + ["Godly Matter"]* 3
 
 Crate7Items = ["Dead Void Dust", "Void Stick", "Void Shard", "Void Power Cube", "Eternal Void Glove"]
-Crate7Values = [2500, 8000, 15000, 190000, 350000]
+Crate7Values = [2500, 8000, 15000, 150000, 350000]
 Crate7Chances = ["Dead Void Dust"]*1800 + ["Void Stick"]*666 + ["Void Shard"]*60 + ["Void Power Cube"]*10 + ["Eternal Void Glove"]
 
 Crate8Items = ["Uknown Identity", "Unknown Orb", "Unknown Laser", "Unknown Mask", "Unknown Matter???"]
@@ -103,6 +103,7 @@ PlayerMoney = 0
 PlayerInsurance = 0
 PlayerInsuranceDuration = 0
 PlayerSessionSpins = 0
+PlayerTotalSpins = 0
 
 PreviousBet = 0
 PreviousMethod = ""
@@ -706,9 +707,9 @@ def ResetData():
 
   Clear()
 
-  Data = [str(StartMoney) + ",", str(StartInsurance) + ",", str(StartInsuranceDuration)]
+  Data = [str(StartMoney) + ",", str(StartInsurance) + ",", str(StartInsuranceDuration) + ",", str(0)]
 
-  WriteData = open("GamblingData_V1.txt", "w")
+  WriteData = open("GamblingData_V2.txt", "w")
   WriteData.writelines(Data)
   WriteData.close()
 
@@ -732,6 +733,7 @@ def PrintInfo(DoClear):
   print("Insurance  •  ", InsuranceIcon, InsuranceString[:(InsuranceDecimalPlace + 3)] + "%")
   print("Insurance Duration  •  ", InsuranceIcon , str(format(PlayerInsuranceDuration, ",")), "Rounds")
   print("Session Spins  • ", SpinsIcon, str(format(PlayerSessionSpins, ",")))
+  print("Total Spins  • ", SpinsIcon, str(format(PlayerTotalSpins, ",")))
 
 
 # --Game
@@ -766,21 +768,21 @@ print()
 input("Press enter to continue: ")
 
 
-if not os.path.exists("GamblingData_V1.txt"):
+if not os.path.exists("GamblingData_V2.txt"):
   PlayerMoney = StartMoney
   PlayerInsurance = StartInsurance
   PlayerInsuranceDuration = StartInsuranceDuration
 
-  Data = [str(PlayerMoney) + ",", str(PlayerInsurance) + ",", str(PlayerInsuranceDuration)]
+  Data = [str(PlayerMoney) + ",", str(PlayerInsurance) + ",", str(PlayerInsuranceDuration) + ",", str(PlayerTotalSpins)]
 
-  WriteData = open("GamblingData_V1.txt", "w")
+  WriteData = open("GamblingData_V2.txt", "w")
   WriteData.writelines(Data)
   WriteData.close()
 
 else:
   PlayerValues = []
 
-  DataFile = open("GamblingData_V1.txt", "r")
+  DataFile = open("GamblingData_V2.txt", "r")
 
   for DataValue in DataFile:
     Value = DataValue.split(",")
@@ -789,15 +791,16 @@ else:
   PlayerMoney = int(PlayerValues[0])
   PlayerInsurance = float(PlayerValues[1])
   PlayerInsuranceDuration = int(PlayerValues[2])
+  PlayerTotalSpins = int(PlayerValues[3])
 
 while True:
 
   if PlayerInsuranceDuration == 0:
     PlayerInsurance = 0
 
-  Data = [str(PlayerMoney) + ",", str(PlayerInsurance) + ",", str(PlayerInsuranceDuration)]
+  Data = [str(PlayerMoney) + ",", str(PlayerInsurance) + ",", str(PlayerInsuranceDuration) + ",", str(PlayerTotalSpins)]
 
-  WriteData = open("GamblingData_V1.txt", "w")
+  WriteData = open("GamblingData_V2.txt", "w")
   WriteData.writelines(Data)
   WriteData.close()
   
@@ -890,6 +893,7 @@ while True:
         PreviousBet = NewBet
         PreviousAttempts = 0
         PlayerSessionSpins += 1
+        PlayerTotalSpins += 1
         if PlayerInsuranceDuration >= 1:
           PlayerInsuranceDuration -= 1
 
@@ -921,6 +925,7 @@ while True:
         PreviousBet = NewBet
         PreviousAttempts = 0
         PlayerSessionSpins += 1
+        PlayerTotalSpins += 1
         if PlayerInsuranceDuration >= 1:
           PlayerInsuranceDuration -= 1
 
@@ -949,6 +954,7 @@ while True:
         PreviousSide = NewSide
         PreviousAttempts = 0
         PlayerSessionSpins += 1
+        PlayerTotalSpins += 1
         if PlayerInsuranceDuration >= 1:
           PlayerInsuranceDuration -= 1
     
@@ -977,6 +983,7 @@ while True:
         PreviousItem = NewItem
         PreviousAttempts = 0
         PlayerSessionSpins += 1
+        PlayerTotalSpins += 1
         if PlayerInsuranceDuration >= 1:
           PlayerInsuranceDuration -= 1
 
@@ -1005,6 +1012,7 @@ while True:
         PreviousCup = NewCup
         PreviousAttempts = 0
         PlayerSessionSpins += 1
+        PlayerTotalSpins += 1
         if PlayerInsuranceDuration >= 1:
           PlayerInsuranceDuration -= 1
 
@@ -1035,6 +1043,7 @@ while True:
         PreviousEgg = NewEgg
         PreviousAttempts = 0
         PlayerSessionSpins += 1
+        PlayerTotalSpins += 1
         if PlayerInsuranceDuration >= 1:
           PlayerInsuranceDuration -= 1
 
@@ -1108,6 +1117,7 @@ while True:
         PreviousCrate = NewCrate
         PreviousAttempts = 0
         PlayerSessionSpins += 1
+        PlayerTotalSpins += 1
         if PlayerInsuranceDuration >= 1:
           PlayerInsuranceDuration -= 1
 
@@ -1141,6 +1151,7 @@ while True:
           PreviousBet = NewBet
           PreviousAttempts = 0
           PlayerSessionSpins += 1
+          PlayerTotalSpins += 1
           if PlayerInsuranceDuration >= 1:
             PlayerInsuranceDuration -= 1
 
@@ -1173,6 +1184,7 @@ while True:
           PreviousBet = NewBet
           PreviousAttempts = 0
           PlayerSessionSpins += 1
+          PlayerTotalSpins += 1
           if PlayerInsuranceDuration >= 1:
             PlayerInsuranceDuration -= 1
 
@@ -1202,6 +1214,7 @@ while True:
           PreviousSide = NewSide
           PreviousAttempts = 0
           PlayerSessionSpins += 1
+          PlayerTotalSpins += 1
           if PlayerInsuranceDuration >= 1:
             PlayerInsuranceDuration -= 1
 
@@ -1231,6 +1244,7 @@ while True:
           PreviousItem = NewItem
           PreviousAttempts = 0
           PlayerSessionSpins += 1
+          PlayerTotalSpins += 1
           if PlayerInsuranceDuration >= 1:
             PlayerInsuranceDuration -= 1
 
@@ -1260,6 +1274,7 @@ while True:
           PreviousCup = NewCup
           PreviousAttempts = 0
           PlayerSessionSpins += 1
+          PlayerTotalSpins += 1
           if PlayerInsuranceDuration >= 1:
             PlayerInsuranceDuration -= 1
 
@@ -1290,6 +1305,7 @@ while True:
           PreviousEgg = NewEgg
           PreviousAttempts = 0
           PlayerSessionSpins += 1
+          PlayerTotalSpins += 1
           if PlayerInsuranceDuration >= 1:
             PlayerInsuranceDuration -= 1
 
@@ -1363,6 +1379,7 @@ while True:
           PreviousCrate = NewCrate
           PreviousAttempts = 0
           PlayerSessionSpins += 1
+          PlayerTotalSpins += 1
           if PlayerInsuranceDuration >= 1:
             PlayerInsuranceDuration -= 1
 
@@ -1372,6 +1389,8 @@ while True:
       PlayerMoney = StartMoney
       PlayerInsurance = StartInsurance
       PlayerInsuranceDuration = StartInsuranceDuration
+      PlayerSessionSpins = 0
+      PlayerTotalSpins = 0
 
     elif NewGambleType == "":
       if PreviousAttempts <= 9:
@@ -1388,6 +1407,7 @@ while True:
             PreviousBet = NewBet
             PreviousSide = NewSide
             PlayerSessionSpins += 1
+            PlayerTotalSpins += 1
             if PlayerInsuranceDuration >= 1:
               PlayerInsuranceDuration -= 1
 
@@ -1402,6 +1422,7 @@ while True:
             PreviousMethod = "Slots"
             PreviousBet = NewBet
             PlayerSessionSpins += 1
+            PlayerTotalSpins += 1
             if PlayerInsuranceDuration >= 1:
               PlayerInsuranceDuration -= 1
 
@@ -1416,6 +1437,7 @@ while True:
             PreviousMethod = "Dice"
             PreviousBet = NewBet
             PlayerSessionSpins += 1
+            PlayerTotalSpins += 1
             if PlayerInsuranceDuration >= 1:
               PlayerInsuranceDuration -= 1
 
@@ -1431,6 +1453,7 @@ while True:
             PreviousBet = NewBet
             PreviousItem = NewItem
             PlayerSessionSpins += 1
+            PlayerTotalSpins += 1
             if PlayerInsuranceDuration >= 1:
               PlayerInsuranceDuration -= 1
           
@@ -1446,6 +1469,7 @@ while True:
             PreviousBet = NewBet
             PreviousCup = NewCup
             PlayerSessionSpins += 1
+            PlayerTotalSpins += 1
             if PlayerInsuranceDuration >= 1:
               PlayerInsuranceDuration -= 1
 
@@ -1461,6 +1485,7 @@ while True:
             PreviousBet = NewBet
             PreviousEgg = NewEgg
             PlayerSessionSpins += 1
+            PlayerTotalSpins += 1
             if PlayerInsuranceDuration >= 1:
               PlayerInsuranceDuration -= 1
         
@@ -1476,6 +1501,7 @@ while True:
             PreviousBet = NewBet
             PreviousCrate = NewCrate
             PlayerSessionSpins += 1
+            PlayerTotalSpins += 1
             if PlayerInsuranceDuration >= 1:
               PlayerInsuranceDuration -= 1
 
