@@ -7,8 +7,8 @@ import math
 
 # --Updates
 
-UpdateLog = ["• Added Log", "• Balanced Multipliers", "• Increased Rolldice Chances"]
-UpdateVersion = "1.0"
+UpdateLog = ["• Added Crates Gamemode", "• 5 Crates Total", "• Fixed Bug"]
+UpdateVersion = "1.1"
 
 # --Settings
 
@@ -22,6 +22,29 @@ MaxBet = 100000
 SlotsSmallWin = 1.25
 SlotsMediumWin = 1.75
 SlotsMaxWin = 15
+
+CrateNames = ["Basic", "Rare", "Epic", "Legendary", "Ruby"]
+CratePrices = [300, 750, 1500, 3000, 5000]
+
+Crate1Items = ["Tool", "Cheese", "Green Stick", "Stack of Money"]
+Crate1Values = [100, 150, 250, 450]
+Crate1Chances = ["Tool"]*50 + ["Cheese"]*30 + ["Green Stick"]*15 + ["Stack of Money"]*5
+
+Crate2Items = ["Glowing Stick", "Red Potion", "Stack of Money", "Pouch of Money"]
+Crate2Values = [250, 375, 650, 850]
+Crate2Chances = ["Glowing Stick"]*50 + ["Red Potion"]*30 + ["Stack of Money"]*15 + ["Pouch of Money"]*5
+
+Crate3Items = ["Mini Statue", "Creepy Mask", "Glowing Dust", "Ancient Metal Bit"]
+Crate3Values = [1000, 1400, 1600, 2500]
+Crate3Chances = ["Mini Statue"]*60 + ["Creepy Mask"]*35 + ["Glowing Dust"]*15 + ["Ancient Metal Bit"]*5
+
+Crate4Items = ["Goofy Mask", "Shady Fedora", "Ancient Metal Bit", "Glowing Orb"]
+Crate4Values = [2000, 2500, 6000, 15000]
+Crate4Chances = ["Goofy Mask"]*60 + ["Shady Fedore"]*50 + ["Ancient Metal Bit"]*5 + ["Glowing Orb"]
+
+Crate5Items = ["Cape of Disguise", "Forbidden Ring", "Mega Ancient Jewel", "Ruby of the Gods"]
+Crate5Values = [4000, 25000, 250000, 750000]
+Crate5Chances = ["Cape of Disguise"]*4500 + ["Forbidden Ring"]*50 + ["Mega Ancient Jewel"]*15 + ["Ruby of the Gods"]*3
 
 SlotsChances = ["JACKPOT"] + ["BIG WINNER"]*14 + ["WINNER"]*25 + ["LOSER"]*60
 SlotsJackpotShow = "💶  • 💶  • 💶"
@@ -52,7 +75,7 @@ CoinFlipChances = ["Heads", "Tails"]
 
 RockPaperScissorsChances = ["Rock", "Paper", "Scissors"]
 
-Gamemodes = ["Coinflip", "Rolldice", "RockPaperScissors", "Slots", "Cups", "Egg"]
+Gamemodes = ["Coinflip", "Rolldice", "RockPaperScissors", "Slots", "Cups", "Egg", "Crates"]
 
 StartMoney = 150
 StartInsurance = 0.15
@@ -71,6 +94,7 @@ PreviousSide = ""
 PreviousItem = ""
 PreviousCup = 0
 PreviousEgg = 0
+PreviousCrate = 0
 PreviousAttempts = 0
 
 # --Functions
@@ -496,8 +520,107 @@ def BetEgg(BetAmount, Egg):
     return 0, NewBet, NewEgg, "Error"
 
   else:
+    Clear()
     print("Error with Egg")
     return 0, NewBet, NewEgg, "Error"
+  
+def BetCrates(CrateNumber):
+  print()
+  InputType, NewCrateNumber = CheckInput(CrateNumber)
+
+  if InputType == "Int" and NewCrateNumber >= 1 and NewCrateNumber <= 5:
+    if PlayerMoney >= CratePrices[NewCrateNumber - 1]:
+
+      Clear()
+
+      if NewCrateNumber == 1:
+        CrateWinnings = random.choice(Crate1Chances)
+
+        CrateIndex = Crate1Items.index(CrateWinnings)
+        CrateMoney = Crate1Values[CrateIndex]
+        CratePrice = CratePrices[NewCrateNumber - 1]
+
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("You got a", CrateWinnings)
+        print()
+        print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
+        return CrateMoney, CratePrice, NewCrateNumber, "Success"
+      
+      elif NewCrateNumber == 2:
+        CrateWinnings = random.choice(Crate2Chances)
+
+        CrateIndex = Crate2Items.index(CrateWinnings)
+        CrateMoney = Crate2Values[CrateIndex]
+        CratePrice = CratePrices[NewCrateNumber - 1]
+
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("You got a", CrateWinnings)
+        print()
+        print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
+        return CrateMoney, CratePrice, NewCrateNumber, "Success"
+    
+      elif NewCrateNumber == 3:
+        CrateWinnings = random.choice(Crate3Chances)
+
+        CrateIndex = Crate3Items.index(CrateWinnings)
+        CrateMoney = Crate3Values[CrateIndex]
+        CratePrice = CratePrices[NewCrateNumber - 1]
+
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("You got a", CrateWinnings)
+        print()
+        print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
+        return CrateMoney, CratePrice, NewCrateNumber, "Success"
+      
+      elif NewCrateNumber == 4:
+        CrateWinnings = random.choice(Crate4Chances)
+
+        CrateIndex = Crate4Items.index(CrateWinnings)
+        CrateMoney = Crate4Values[CrateIndex]
+        CratePrice = CratePrices[NewCrateNumber - 1]
+
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("You got a", CrateWinnings)
+        print()
+        print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
+        return CrateMoney, CratePrice, NewCrateNumber, "Success"
+      
+      elif NewCrateNumber == 5:
+        CrateWinnings = random.choice(Crate5Chances)
+
+        CrateIndex = Crate5Items.index(CrateWinnings)
+        CrateMoney = Crate5Values[CrateIndex]
+        CratePrice = CratePrices[NewCrateNumber - 1]
+
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("You got a", CrateWinnings)
+        print()
+        print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
+        return CrateMoney, CratePrice, NewCrateNumber, "Success"
+
+    else:
+      print("Not enough", MoneyIcon)
+      return 0, NewBet, NewCrateNumber, "Error"
+
+  elif InputType != "Int" or NewCrateNumber <= 0 or NewCrateNumber >= 6:
+    print("Crate number must be between 1 and 5")
+    return 0, NewBet, NewCrateNumber, "Error"
+  
+def GetCratesChances(CrateTable, CrateItem):
+  CrateCounter = 0
+
+  for NewItem in range(len(CrateTable)):
+    if CrateTable[NewItem] == CrateItem:
+      CrateCounter += 1
+  
+  ItemPercentage = CrateCounter / len(CrateTable) * 10000 / 100
+  ItemPercentage = str(ItemPercentage)
+
+  ItemDecimal = ItemPercentage.find(".")
+
+  ItemPercentage = ItemPercentage[:(ItemDecimal + 3)]
+
+  return (str(ItemPercentage) + "%")
 
 def ResetData():
   Clear()
@@ -643,7 +766,8 @@ while True:
   print("• ✂️   Rock Paper Scissors - 4")
   print("• 🥤  Cups - 5")
   print("• 🥚  Egg - 6")
-  print("• ❓  Random - 7")
+  print("• 📦  Crates - 7")
+  print("• ❓  Random - 8")
   print("• 🐛  Reset Data - R")
   print("• 🔁  Previous - Enter")
   print()
@@ -653,7 +777,7 @@ while True:
   GambleType = input("What gamble method would you like: ")
   InputType, NewGambleType = CheckInput(GambleType)
 
-  if (InputType == "Int" and NewGambleType >= 1 and NewGambleType <= 7) or (InputType == "String" and (NewGambleType == "" or NewGambleType.lower() == "r")):
+  if (InputType == "Int" and NewGambleType >= 1 and NewGambleType <= 8) or (InputType == "String" and (NewGambleType == "" or NewGambleType.lower() == "r")):
     PrintInfo(True)
 
     if NewGambleType == 1:
@@ -831,6 +955,61 @@ while True:
           PlayerInsuranceDuration -= 1
 
     elif NewGambleType == 7:
+      for i in range(3):
+        print()
+
+      print("You chose Crates!")
+
+      print()
+      print("1 •", CrateNames[0], "Crate •", MoneyIcon, format(CratePrices[0], ","))
+      
+      for CrateChances in range(len(Crate1Items)):
+        print("•", Crate1Items[CrateChances], "[" + MoneyIcon, str(format(Crate1Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate1Chances, Crate1Items[CrateChances]))
+
+      print()
+      print("1 •", CrateNames[1], "Crate •", MoneyIcon, format(CratePrices[1], ","))
+      
+      for CrateChances in range(len(Crate2Items)):
+        print("•", Crate2Items[CrateChances], "[" + MoneyIcon, str(format(Crate2Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate2Chances, Crate2Items[CrateChances]))
+      
+      print()
+      print("1 •", CrateNames[2], "Crate •", MoneyIcon, format(CratePrices[2], ","))
+      
+      for CrateChances in range(len(Crate3Items)):
+        print("•", Crate3Items[CrateChances], "[" + MoneyIcon, str(format(Crate3Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate3Chances, Crate3Items[CrateChances]))
+      
+      print()
+      print("1 •", CrateNames[3], "Crate •", MoneyIcon, format(CratePrices[3], ","))
+      
+      for CrateChances in range(len(Crate4Items)):
+        print("•", Crate4Items[CrateChances], "[" + MoneyIcon, str(format(Crate4Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate4Chances, Crate4Items[CrateChances]))
+      
+      print()
+      print("1 •", CrateNames[4], "Crate •", MoneyIcon, format(CratePrices[4], ","))
+      
+      for CrateChances in range(len(Crate5Items)):
+        print("•", Crate5Items[CrateChances], "[" + MoneyIcon, str(format(Crate5Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate5Chances, Crate5Items[CrateChances]))
+      
+      print()
+
+      time.sleep(0.25)
+
+      NewMoney, NewBet, NewCrate, NewStatus = BetCrates(input("What crate would you like to open: "))
+
+      if NewStatus != "Error":
+
+        PlayerMoney -= NewBet
+        PlayerMoney += NewMoney
+
+        PreviousMethod = "Crate"
+        PreviousBet = NewBet
+        PreviousCrate = NewCrate
+        PreviousAttempts = 0
+        PlayerSessionSpins += 1
+        if PlayerInsuranceDuration >= 1:
+          PlayerInsuranceDuration -= 1
+
+    elif NewGambleType == 8:
       RandomGambleType = random.choice(Gamemodes)
 
       if RandomGambleType == "Rolldice":
@@ -1012,6 +1191,61 @@ while True:
           if PlayerInsuranceDuration >= 1:
             PlayerInsuranceDuration -= 1
 
+      elif RandomGambleType == "Crates":
+        for i in range(3):
+          print()
+
+        print("You chose Crates!")
+
+        print()
+        print("1 •", CrateNames[0], "Crate •", MoneyIcon, format(CratePrices[0], ","))
+        
+        for CrateChances in range(len(Crate1Items)):
+          print("•", Crate1Items[CrateChances], "[" + MoneyIcon, str(format(Crate1Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate1Chances, Crate1Items[CrateChances]))
+
+        print()
+        print("1 •", CrateNames[1], "Crate •", MoneyIcon, format(CratePrices[1], ","))
+        
+        for CrateChances in range(len(Crate2Items)):
+          print("•", Crate2Items[CrateChances], "[" + MoneyIcon, str(format(Crate2Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate2Chances, Crate2Items[CrateChances]))
+        
+        print()
+        print("1 •", CrateNames[2], "Crate •", MoneyIcon, format(CratePrices[2], ","))
+        
+        for CrateChances in range(len(Crate3Items)):
+          print("•", Crate3Items[CrateChances], "[" + MoneyIcon, str(format(Crate3Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate3Chances, Crate3Items[CrateChances]))
+        
+        print()
+        print("1 •", CrateNames[3], "Crate •", MoneyIcon, format(CratePrices[3], ","))
+        
+        for CrateChances in range(len(Crate4Items)):
+          print("•", Crate4Items[CrateChances], "[" + MoneyIcon, str(format(Crate4Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate4Chances, Crate4Items[CrateChances]))
+        
+        print()
+        print("1 •", CrateNames[4], "Crate •", MoneyIcon, format(CratePrices[4], ","))
+        
+        for CrateChances in range(len(Crate5Items)):
+          print("•", Crate5Items[CrateChances], "[" + MoneyIcon, str(format(Crate5Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate5Chances, Crate5Items[CrateChances]))
+        
+        print()
+
+        time.sleep(0.25)
+
+        NewMoney, NewBet, NewCrate, NewStatus = BetCrates(input("What crate would you like to open: "))
+
+        if NewStatus != "Error":
+
+          PlayerMoney -= NewBet
+          PlayerMoney += NewMoney
+
+          PreviousMethod = "Crate"
+          PreviousBet = NewBet
+          PreviousCrate = NewCrate
+          PreviousAttempts = 0
+          PlayerSessionSpins += 1
+          if PlayerInsuranceDuration >= 1:
+            PlayerInsuranceDuration -= 1
+
     elif NewGambleType == "R" or NewGambleType == "r":
       ResetData()
 
@@ -1109,6 +1343,21 @@ while True:
             PlayerSessionSpins += 1
             if PlayerInsuranceDuration >= 1:
               PlayerInsuranceDuration -= 1
+        
+        elif PreviousMethod == "Crate":
+          NewMoney, NewBet, NewCrate, NewStatus = BetCrates(PreviousCrate)
+
+        if NewStatus != "Error":
+
+          PlayerMoney -= NewBet
+          PlayerMoney += NewMoney
+
+          PreviousMethod = "Crate"
+          PreviousBet = NewBet
+          PreviousCrate = NewCrate
+          PlayerSessionSpins += 1
+          if PlayerInsuranceDuration >= 1:
+            PlayerInsuranceDuration -= 1
 
         else:
           Clear()
