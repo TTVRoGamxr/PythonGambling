@@ -8,7 +8,7 @@ import math
 # --Updates
 
 UpdateLog = ["• Reworked Egg", "• Made Gambling Cap 50K", "• Bug Fixes"]
-UpdateVersion = "1.2"
+UpdateVersion = "1.2b"
 
 # --Special
 
@@ -47,15 +47,15 @@ Crate4Values = [2000, 2500, 6000, 15000]
 Crate4Chances = ["Goofy Mask"]*60 + ["Shady Fedore"]*50 + ["Ancient Metal Bit"]*10 + ["Glowing Orb"]*3
 
 Crate5Items = ["Cape of Disguise", "Forbidden Ring", "Mega Ancient Jewel", "Ruby of the Gods"]
-Crate5Values = [4000, 5500, 12500, 450000]
+Crate5Values = [4000, 5500, 12500, 275000]
 Crate5Chances = ["Cape of Disguise"]*1500 + ["Forbidden Ring"]*750 + ["Mega Ancient Jewel"]*20 + ["Ruby of the Gods"]*4
 
 Crate6Items = ["Weapon of the Gods", "Godly Orb", "Godly Jewel", "Godly Pendant", "Godly Matter"]
-Crate6Values = [3250, 5500, 9000, 175000, 500000]
+Crate6Values = [3250, 5500, 9000, 175000, 300000]
 Crate6Chances = ["Weapon of the Gods"]*1750 + ["Godly Orb"]*630 + ["Godly Jewel"]*75 + ["Godly Pendant"]*13 + ["Godly Matter"]* 3
 
 Crate7Items = ["Dead Void Dust", "Void Stick", "Void Shard", "Void Power Cube", "Eternal Void Glove"]
-Crate7Values = [2500, 8000, 15000, 190000, 275000]
+Crate7Values = [2500, 8000, 15000, 190000, 350000]
 Crate7Chances = ["Dead Void Dust"]*1800 + ["Void Stick"]*666 + ["Void Shard"]*60 + ["Void Power Cube"]*10 + ["Eternal Void Glove"]
 
 Crate8Items = ["Uknown Identity", "Unknown Orb", "Unknown Laser", "Unknown Mask", "Unknown Matter???"]
