@@ -7,8 +7,8 @@ import math
 
 # --Updates
 
-UpdateLog = ["• Rebalanced Crates", "• Added Crate Content"]
-UpdateVersion = "1.1b3"
+UpdateLog = ["• Rebalanced Crates", "• +2 New Crates", "• ???"]
+UpdateVersion = "1.1b4"
 
 # --Special
 
@@ -27,8 +27,8 @@ SlotsSmallWin = 1.25
 SlotsMediumWin = 1.75
 SlotsMaxWin = 15
 
-CrateNames = ["Basic", "Rare", "Epic", "Legendary", "Ruby", "Godly"]
-CratePrices = [300, 750, 1500, 3000, 5000, 6000]
+CrateNames = ["Basic", "Rare", "Epic", "Legendary", "Ruby", "Godly", "Void", "Unknown"]
+CratePrices = [300, 750, 1500, 3000, 5000, 6000, 10000, 15000]
 
 Crate1Items = ["Tool", "Cheese", "Green Stick", "Stack of Money"]
 Crate1Values = [125, 200, 315, 500]
@@ -50,9 +50,17 @@ Crate5Items = ["Cape of Disguise", "Forbidden Ring", "Mega Ancient Jewel", "Ruby
 Crate5Values = [4000, 5500, 12500, 450000]
 Crate5Chances = ["Cape of Disguise"]*1500 + ["Forbidden Ring"]*750 + ["Mega Ancient Jewel"]*20 + ["Ruby of the Gods"]*4
 
-Crate6Items = ["Weapon of the Gods", "Godly Orb", "Godly Jewel", "Ruby Pendant", "Unknown Matter???"]
-Crate6Values = [5250, 7500, 15000, 175000, 1000000]
-Crate6Chances = ["Weapon of the Gods"]*1750 + ["Godly Orb"]*630 + ["Godly Jewel"]*75 + ["Ruby Pendant"]*13 + ["Unknown Matter???"]
+Crate6Items = ["Weapon of the Gods", "Godly Orb", "Godly Jewel", "Godly Pendant", "Godly Matter"]
+Crate6Values = [5250, 7500, 15000, 175000, 500000]
+Crate6Chances = ["Weapon of the Gods"]*1750 + ["Godly Orb"]*630 + ["Godly Jewel"]*75 + ["Godly Pendant"]*13 + ["Godly Matter"]* 3
+
+Crate7Items = ["Dead Void Dust", "Void Stick", "Void Shard", "Void Power Cube", "Eternal Void Glove"]
+Crate7Values = [2500, 8000, 15000, 190000, 275000]
+Crate7Chances = ["Dead Void Dust"]*1800 + ["Void Stick"]*666 + ["Void Shard"]*60 + ["Void Power Cube"]*10 + ["Eternal Void Glove"]
+
+Crate8Items = ["Uknown Identity", "Unknown Orb", "Unknown Laser", "Unknown Mask", "Unknown Matter???"]
+Crate8Values = [10000, 15500, 25000, 500000, 600000]
+Crate8Chances = ["Uknown Identity"]*1700 + ["Unknown Orb"]*500 + ["Unknown Laser"]*60 + ["Unknown Mask"]*12 + ["Unknown Matter???"]*2
 
 SlotsChances = ["JACKPOT"] + ["BIG WINNER"]*14 + ["WINNER"]*25 + ["LOSER"]*60
 SlotsJackpotShow = "💶  • 💶  • 💶"
@@ -559,7 +567,7 @@ def BetCrates(CrateNumber):
   print()
   InputType, NewCrateNumber = CheckInput(CrateNumber)
 
-  if InputType == "Int" and NewCrateNumber >= 1 and NewCrateNumber <= 6:
+  if InputType == "Int" and NewCrateNumber >= 1 and NewCrateNumber <= 8:
     if PlayerMoney >= CratePrices[NewCrateNumber - 1]:
 
       Clear()
@@ -571,7 +579,7 @@ def BetCrates(CrateNumber):
         CrateMoney = Crate1Values[CrateIndex]
         CratePrice = CratePrices[NewCrateNumber - 1]
 
-        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "Crate! •")
         print("You got a", CrateWinnings)
         print()
         print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
@@ -584,7 +592,7 @@ def BetCrates(CrateNumber):
         CrateMoney = Crate2Values[CrateIndex]
         CratePrice = CratePrices[NewCrateNumber - 1]
 
-        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "Crate! •")
         print("You got a", CrateWinnings)
         print()
         print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
@@ -597,7 +605,7 @@ def BetCrates(CrateNumber):
         CrateMoney = Crate3Values[CrateIndex]
         CratePrice = CratePrices[NewCrateNumber - 1]
 
-        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "Crate! •")
         print("You got a", CrateWinnings)
         print()
         print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
@@ -610,7 +618,7 @@ def BetCrates(CrateNumber):
         CrateMoney = Crate4Values[CrateIndex]
         CratePrice = CratePrices[NewCrateNumber - 1]
 
-        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "Crate! •")
         print("You got a", CrateWinnings)
         print()
         print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
@@ -623,7 +631,7 @@ def BetCrates(CrateNumber):
         CrateMoney = Crate5Values[CrateIndex]
         CratePrice = CratePrices[NewCrateNumber - 1]
 
-        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "Crate! •")
         print("You got a", CrateWinnings)
         print()
         print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
@@ -636,7 +644,33 @@ def BetCrates(CrateNumber):
         CrateMoney = Crate6Values[CrateIndex]
         CratePrice = CratePrices[NewCrateNumber - 1]
 
-        print("• You opend a", CrateNames[NewCrateNumber - 1], "crate! •")
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "Crate! •")
+        print("You got a", CrateWinnings)
+        print()
+        print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
+        return CrateMoney, CratePrice, NewCrateNumber, "Success"
+      
+      elif NewCrateNumber == 7:
+        CrateWinnings = random.choice(Crate7Chances)
+
+        CrateIndex = Crate7Items.index(CrateWinnings)
+        CrateMoney = Crate7Values[CrateIndex]
+        CratePrice = CratePrices[NewCrateNumber - 1]
+
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "Crate! •")
+        print("You got a", CrateWinnings)
+        print()
+        print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
+        return CrateMoney, CratePrice, NewCrateNumber, "Success"
+      
+      elif NewCrateNumber == 8:
+        CrateWinnings = random.choice(Crate8Chances)
+
+        CrateIndex = Crate8Items.index(CrateWinnings)
+        CrateMoney = Crate8Values[CrateIndex]
+        CratePrice = CratePrices[NewCrateNumber - 1]
+
+        print("• You opend a", CrateNames[NewCrateNumber - 1], "Crate! •")
         print("You got a", CrateWinnings)
         print()
         print(" +", MoneyIcon, str(format(CrateMoney, ",")), "•", MoneyIcon, str(format(CrateMoney - CratePrice, ",")), "profit")
@@ -647,7 +681,7 @@ def BetCrates(CrateNumber):
       print("Not enough", MoneyIcon)
       return 0, 0, NewCrateNumber, "Error"
 
-  elif InputType != "Int" or NewCrateNumber <= 0 or NewCrateNumber >= 7:
+  elif InputType != "Int" or NewCrateNumber <= 0 or NewCrateNumber >= 9:
     Clear()
     print("Crate number must be between 1 and 5")
     return 0, 0, NewCrateNumber, "Error"
@@ -1055,6 +1089,18 @@ while True:
       
       for CrateChances in range(len(Crate6Items)):
         print("  •", Crate6Items[CrateChances], "[" + MoneyIcon, str(format(Crate6Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate6Chances, Crate6Items[CrateChances]))
+
+      print()
+      print("7 •", CrateNames[6], "Crate •", MoneyIcon, format(CratePrices[6], ","))
+      
+      for CrateChances in range(len(Crate7Items)):
+        print("  •", Crate7Items[CrateChances], "[" + MoneyIcon, str(format(Crate7Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate7Chances, Crate7Items[CrateChances]))
+      
+      print()
+      print("8 •", CrateNames[7], "Crate •", MoneyIcon, format(CratePrices[7], ","))
+      
+      for CrateChances in range(len(Crate8Items)):
+        print("  •", Crate8Items[CrateChances], "[" + MoneyIcon, str(format(Crate6Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate8Chances, Crate8Items[CrateChances]))
       
       print()
 
@@ -1298,6 +1344,18 @@ while True:
         
         for CrateChances in range(len(Crate6Items)):
           print("  •", Crate6Items[CrateChances], "[" + MoneyIcon, str(format(Crate6Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate6Chances, Crate6Items[CrateChances]))
+        
+        print()
+        print("7 •", CrateNames[6], "Crate •", MoneyIcon, format(CratePrices[6], ","))
+        
+        for CrateChances in range(len(Crate7Items)):
+          print("  •", Crate7Items[CrateChances], "[" + MoneyIcon, str(format(Crate7Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate7Chances, Crate7Items[CrateChances]))
+        
+        print()
+        print("8 •", CrateNames[7], "Crate •", MoneyIcon, format(CratePrices[7], ","))
+        
+        for CrateChances in range(len(Crate8Items)):
+          print("  •", Crate8Items[CrateChances], "[" + MoneyIcon, str(format(Crate6Values[CrateChances], ",")) + "]", "•", GetCratesChances(Crate8Chances, Crate8Items[CrateChances]))
         
         print()
 
