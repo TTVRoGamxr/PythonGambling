@@ -85,7 +85,8 @@ EggMainWin = 1.35
 EggSmallRange = 5
 EggMainRange = 10
 
-MainWin = 2
+MainWin = 1.35
+SecondaryWin = 1.75
 
 CoinFlipChances = ["Heads", "Tails"]
 
@@ -422,8 +423,8 @@ def BetCups(BetAmount, Cup):
             print("🕳️  • 🕳️ •  💎")
 
           print()
-          print(" +", MoneyIcon, str(format(math.ceil(NewBet * MainWin), ",")), "•", MoneyIcon, str(format(math.ceil(math.ceil(NewBet * MainWin) - NewBet), ",")), "profit")
-          return math.ceil(NewBet * MainWin), NewBet, NewCup, "Success"
+          print(" +", MoneyIcon, str(format(math.ceil(NewBet * SecondaryWin), ",")), "•", MoneyIcon, str(format(math.ceil(math.ceil(NewBet * SecondaryWin) - NewBet), ",")), "profit")
+          return math.ceil(NewBet * SecondaryWin), NewBet, NewCup, "Success"
 
         else:
           print("• Incorrect, it was", str(CupNumber), "•")
@@ -936,7 +937,7 @@ while True:
       print("You chose Coinflip!")
 
       print()
-      print("• Win - 2 multiplier")
+      print("• Win -", MainWin, "multiplier")
       print("• lose - lose")
       print()
 
@@ -994,7 +995,7 @@ while True:
       print("You chose Cups!")
 
       print()
-      print("• Win - 2 multiplier")
+      print("• Win -", SecondaryWin, "multiplier")
       print("• lose - lose")
       print()
 
@@ -1196,7 +1197,7 @@ while True:
         print("You chose Coinflip!")
 
         print()
-        print("• Win - 2 multiplier")
+        print("• Win -", MainWin, "multiplier")
         print("• lose - lose")
         print()
 
@@ -1256,7 +1257,7 @@ while True:
         print("You chose Cups!")
 
         print()
-        print("• Win - 2 multiplier")
+        print("• Win -", SecondaryWin, "multiplier")
         print("• lose - lose")
         print()
 
