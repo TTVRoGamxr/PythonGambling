@@ -51,7 +51,7 @@ Crate5Values = [4000, 5500, 12500, 450000]
 Crate5Chances = ["Cape of Disguise"]*1500 + ["Forbidden Ring"]*750 + ["Mega Ancient Jewel"]*20 + ["Ruby of the Gods"]*4
 
 Crate6Items = ["Weapon of the Gods", "Godly Orb", "Godly Jewel", "Godly Pendant", "Godly Matter"]
-Crate6Values = [5250, 7500, 15000, 175000, 500000]
+Crate6Values = [3250, 5500, 9000, 175000, 500000]
 Crate6Chances = ["Weapon of the Gods"]*1750 + ["Godly Orb"]*630 + ["Godly Jewel"]*75 + ["Godly Pendant"]*13 + ["Godly Matter"]* 3
 
 Crate7Items = ["Dead Void Dust", "Void Stick", "Void Shard", "Void Power Cube", "Eternal Void Glove"]
