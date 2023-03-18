@@ -7,8 +7,12 @@ import math
 
 # --Updates
 
-UpdateLog = ["• Fixed Bugs", "• Balanced Crates"]
+UpdateLog = ["• Fixed Bugs", "• Balanced Crates", "• Special Thanks Area"]
 UpdateVersion = "1.1a"
+
+# --Special
+
+SpecialShoutouts = ["• CesarTheGamer#2616"]
 
 # --Settings
 
@@ -698,6 +702,15 @@ print()
 print("• Made by - RoGamxr#1663")
 print("• Discord Invite - http://discord.gg/xE3z4QyBWG")
 print("• Version -", UpdateVersion)
+
+for i in range(3):
+  print()
+
+print("• Special Thanks To •")
+print()
+
+for SpecialText in range(len(SpecialShoutouts)):
+  print(SpecialShoutouts[SpecialText])
 
 for i in range(3):
   print()
