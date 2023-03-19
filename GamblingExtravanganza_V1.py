@@ -7,8 +7,8 @@ import math
 
 # --Updates
 
-UpdateLog = ["• Added Total Spins Tracker", "• Stat Reset"]
-UpdateVersion = "1.3"
+UpdateLog = ["• Optimized Data Saving", "• Bug Fixes"]
+UpdateVersion = "1.4"
 
 # --Special
 
@@ -736,6 +736,12 @@ def PrintInfo(DoClear):
   print("Session Spins  • ", SpinsIcon, str(format(PlayerSessionSpins, ",")))
   print("Total Spins  • ", SpinsIcon, str(format(PlayerTotalSpins, ",")))
 
+def SaveData():
+  Data = [str(PlayerMoney) + ",", str(PlayerInsurance) + ",", str(PlayerInsuranceDuration) + ",", str(PlayerTotalSpins)]
+
+  WriteData = open("GamblingData_V2.txt", "w")
+  WriteData.writelines(Data)
+  WriteData.close()
 
 # --Game
 
@@ -799,13 +805,7 @@ while True:
   if PlayerInsuranceDuration == 0:
     PlayerInsurance = 0
 
-  Data = [str(PlayerMoney) + ",", str(PlayerInsurance) + ",", str(PlayerInsuranceDuration) + ",", str(PlayerTotalSpins)]
-
-  WriteData = open("GamblingData_V2.txt", "w")
-  WriteData.writelines(Data)
-  WriteData.close()
-  
-  PrintInfo(True)
+  PrintInfo()
 
   PrintedExtra = False
   InsuranceRoll = random.randint(1, 25)
@@ -841,6 +841,8 @@ while True:
   if PrintedExtra == True:
     PrintedExtra = False
     print()
+  
+  SaveData()
   
   print()
   time.sleep(0.5)
@@ -890,6 +892,8 @@ while True:
         PlayerMoney -= NewBet
         PlayerMoney += NewMoney
 
+        SaveData()
+
         PreviousMethod = "Dice"
         PreviousBet = NewBet
         PreviousAttempts = 0
@@ -922,6 +926,8 @@ while True:
         PlayerMoney -= NewBet
         PlayerMoney += NewMoney
 
+        SaveData()
+
         PreviousMethod = "Slots"
         PreviousBet = NewBet
         PreviousAttempts = 0
@@ -949,6 +955,8 @@ while True:
 
         PlayerMoney -= NewBet
         PlayerMoney += NewMoney
+
+        SaveData()
 
         PreviousMethod = "Coin"
         PreviousBet = NewBet
@@ -979,6 +987,8 @@ while True:
         PlayerMoney -= NewBet
         PlayerMoney += NewMoney
 
+        SaveData()
+
         PreviousMethod = "RockPaperScissors"
         PreviousBet = NewBet
         PreviousItem = NewItem
@@ -1007,6 +1017,8 @@ while True:
 
         PlayerMoney -= NewBet
         PlayerMoney += NewMoney
+
+        SaveData()
 
         PreviousMethod = "Cups"
         PreviousBet = NewBet
@@ -1038,6 +1050,8 @@ while True:
 
         PlayerMoney -= NewBet
         PlayerMoney += NewMoney
+
+        SaveData()
 
         PreviousMethod = "Egg"
         PreviousBet = NewBet
@@ -1113,6 +1127,8 @@ while True:
         PlayerMoney -= NewBet
         PlayerMoney += NewMoney
 
+        SaveData()
+
         PreviousMethod = "Crate"
         PreviousBet = NewBet
         PreviousCrate = NewCrate
@@ -1148,6 +1164,8 @@ while True:
           PlayerMoney -= NewBet
           PlayerMoney += NewMoney
 
+          SaveData()
+
           PreviousMethod = "Dice"
           PreviousBet = NewBet
           PreviousAttempts = 0
@@ -1181,6 +1199,8 @@ while True:
           PlayerMoney -= NewBet
           PlayerMoney += NewMoney
 
+          SaveData()
+
           PreviousMethod = "Slots"
           PreviousBet = NewBet
           PreviousAttempts = 0
@@ -1209,6 +1229,8 @@ while True:
 
           PlayerMoney -= NewBet
           PlayerMoney += NewMoney
+
+          SaveData()
 
           PreviousMethod = "Coin"
           PreviousBet = NewBet
@@ -1240,6 +1262,8 @@ while True:
           PlayerMoney -= NewBet
           PlayerMoney += NewMoney
 
+          SaveData()
+
           PreviousMethod = "RockPaperScissors"
           PreviousBet = NewBet
           PreviousItem = NewItem
@@ -1269,6 +1293,8 @@ while True:
 
           PlayerMoney -= NewBet
           PlayerMoney += NewMoney
+
+          SaveData()
 
           PreviousMethod = "Cups"
           PreviousBet = NewBet
@@ -1300,6 +1326,8 @@ while True:
 
           PlayerMoney -= NewBet
           PlayerMoney += NewMoney
+
+          SaveData()
 
           PreviousMethod = "Egg"
           PreviousBet = NewBet
@@ -1375,6 +1403,8 @@ while True:
           PlayerMoney -= NewBet
           PlayerMoney += NewMoney
 
+          SaveData()
+
           PreviousMethod = "Crate"
           PreviousBet = NewBet
           PreviousCrate = NewCrate
@@ -1403,6 +1433,8 @@ while True:
 
             PlayerMoney -= NewBet
             PlayerMoney += NewMoney
+
+            SaveData()
 
             PreviousMethod = "Coin"
             PreviousBet = NewBet
@@ -1435,6 +1467,8 @@ while True:
             PlayerMoney -= NewBet
             PlayerMoney += NewMoney
 
+            SaveData()
+
             PreviousMethod = "Dice"
             PreviousBet = NewBet
             PlayerSessionSpins += 1
@@ -1449,6 +1483,8 @@ while True:
 
             PlayerMoney -= NewBet
             PlayerMoney += NewMoney
+
+            SaveData()
 
             PreviousMethod = "RockPaperScissors"
             PreviousBet = NewBet
@@ -1466,6 +1502,8 @@ while True:
             PlayerMoney -= NewBet
             PlayerMoney += NewMoney
 
+            SaveData()
+
             PreviousMethod = "Cups"
             PreviousBet = NewBet
             PreviousCup = NewCup
@@ -1482,6 +1520,8 @@ while True:
             PlayerMoney -= NewBet
             PlayerMoney += NewMoney
 
+            SaveData()
+
             PreviousMethod = "Egg"
             PreviousBet = NewBet
             PreviousEgg = NewEgg
@@ -1497,6 +1537,8 @@ while True:
 
             PlayerMoney -= NewBet
             PlayerMoney += NewMoney
+
+            SaveData()
 
             PreviousMethod = "Crate"
             PreviousBet = NewBet
