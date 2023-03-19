@@ -344,8 +344,8 @@ def BetRockPaperScissors(BetAmount, Item):
             print("• You Won •")
             print("• 📃 - 🦴 •")
             print()
-            print(" +", MoneyIcon, str(format(math.ceil(NewBet * MainWin), ",")), "•", MoneyIcon, str(format(math.ceil(math.ceil(NewBet * MainWin) - NewBet), ",")), "profit")
-            return math.ceil(NewBet * MainWin), NewBet, NewItem, "Success"
+            print(" +", MoneyIcon, str(format(math.ceil(NewBet * SecondaryWin), ",")), "•", MoneyIcon, str(format(math.ceil(math.ceil(NewBet * SecondaryWin) - NewBet), ",")), "profit")
+            return math.ceil(NewBet * SecondaryWin), NewBet, NewItem, "Success"
           
         elif BotChoice.lower() == "paper":
           if NewItem.lower() == "rock":
