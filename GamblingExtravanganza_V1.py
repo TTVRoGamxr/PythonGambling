@@ -85,8 +85,8 @@ EggMainWin = 1.35
 EggSmallRange = 5
 EggMainRange = 10
 
-MainWin = 1.35
-SecondaryWin = 1.75
+MainWin = 1.5
+SecondaryWin = 2
 
 CoinFlipChances = ["Heads", "Tails"]
 
@@ -210,8 +210,8 @@ def BetCoinFlip(BetAmount, SideGuess):
             print("• ⬇️  •")
 
           print()
-          print(" +", MoneyIcon, str(format(math.ceil(NewBet * MainWin), ",")), "•", MoneyIcon, str(format(math.ceil(math.ceil(NewBet * MainWin) - NewBet), ",")), "profit")
-          return math.ceil(NewBet * MainWin), NewBet, NewSideGuess, "Success"
+          print(" +", MoneyIcon, str(format(math.ceil(NewBet * SecondaryWin), ",")), "•", MoneyIcon, str(format(math.ceil(math.ceil(NewBet * SecondaryWin) - NewBet), ",")), "profit")
+          return math.ceil(NewBet * SecondaryWin), NewBet, NewSideGuess, "Success"
         else:
           print("• Incorrect, it was", CoinFlip, "•")
 
@@ -966,7 +966,7 @@ while True:
       print("You chose Rock Paper Scissors!")
 
       print()
-      print("• Win - 2 multiplier")
+      print("• Win -", SecondaryWin, "multiplier")
       print("• lose - lose")
       print()
 
@@ -1227,7 +1227,7 @@ while True:
         print("You chose Rock Paper Scissors!")
 
         print()
-        print("• Win - 2 multiplier")
+        print("• Win -", SecondaryWin, "multiplier")
         print("• lose - lose")
         print()
 
