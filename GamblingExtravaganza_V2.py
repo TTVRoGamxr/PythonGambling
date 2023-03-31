@@ -1798,6 +1798,7 @@ while True:
         print("• - You Are Not On The Latest Version - •")
         print("• - Please Re-Execute To Load The Newest Version - •")
         print("• - Can Take Up To 10 Minutes For Github To Update Code - •")
+        SaveData()
         print()
         exit()
 
