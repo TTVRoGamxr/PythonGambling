@@ -1,2 +1,3 @@
-global VersionNumber
-VersionNumber = "1.0"
+LatestVersionData = {1: "1.5d", 2: "1.0r"}
+global UpdateData
+UpdateData["LatestVersion"] = LatestVersionData[UpdateData["ScriptVersion"]]
