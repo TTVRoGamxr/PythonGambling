@@ -1,1 +1,1 @@
-return LatestVersion = "0.1"
+return {"UpdateVersion": "1.0"}
