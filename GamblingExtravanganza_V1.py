@@ -4,15 +4,15 @@ import random
 import time
 import os
 import math
+import requests
 
 # --Updates
 
-UpdateLog = ["• Optimized Data Saving", "• Bug Fixes"]
-UpdateVersion = "1.4"
+UpdateLog = ["• Version Discontinued"]
+UpdateVersion = "1.5d"
+LatestVersion = None
 
-# --Special
-
-SpecialShoutouts = ["• CesarTheGamer#2616", "• Skyo#2007"]
+UpdateData = {"UpdateVersion": "1.5d", "UpdateLog": ["• Version Discontinued"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• Skyo#2007"], "ScriptVersion": 1, "LastestVersion": None}
 
 # --Settings
 
@@ -756,11 +756,13 @@ print("• Version -", UpdateVersion)
 for i in range(3):
   print()
 
-print("• Special Thanks To •")
+print("• - Special Thanks To - •")
+
 print()
 
-for SpecialText in range(len(SpecialShoutouts)):
-  print(SpecialShoutouts[SpecialText])
+for SText in range(len(UpdateData["SpecialShoutouts"])):
+    Shoutouts = UpdateData["SpecialShoutouts"]
+    print(Shoutouts[SText])
 
 for i in range(3):
   print()
@@ -768,8 +770,9 @@ for i in range(3):
 print("• UPDATE LOG •")
 print()
 
-for UpdateText in range(len(UpdateLog)):
-  print(UpdateLog[UpdateText])
+for UText in range(len(UpdateData["UpdateLog"])):
+    ULog = UpdateData["UpdateLog"]
+    print(ULog[UText])
 
 print()
 input("Press enter to continue: ")
@@ -805,7 +808,20 @@ while True:
   if PlayerInsuranceDuration == 0:
     PlayerInsurance = 0
 
-  PrintInfo()
+  PrintInfo(True)
+
+  UpdateDataCode = "https://raw.githubusercontent.com/TTVRoGamxr/PythonGambling/main/UpdateVersion.py"
+  UpdateDataScript = requests.get(UpdateDataCode)
+  MainDataCode = UpdateDataScript.text
+
+  exec(MainDataCode)
+
+  if UpdateData["UpdateVersion"] != UpdateData["LatestVersion"]:
+    print("• - You Are Not On The Latest Version - •")
+    print("• - Please Re-Execute To Load The Newest Version - •")
+    print("• - Can Take Up To 10 Minutes For Github To Update Code - •")
+    print()
+    exit()
 
   PrintedExtra = False
   InsuranceRoll = random.randint(1, 25)
