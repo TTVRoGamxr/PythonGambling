@@ -1,1 +1,2 @@
-return {"UpdateVersion": "1.0"}
+global VersionNumber
+VersionNumber = "1.0"
