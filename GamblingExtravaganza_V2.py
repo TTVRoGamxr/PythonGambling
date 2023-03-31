@@ -12,7 +12,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.0r", "UpdateLog": ["• Created New Version", "• 5 Save Fils", "• Better Controls", "• Cleaner Prints"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.1", "UpdateLog": ["• Fixed Insurance Decimal", "• 5 Save Data When Outdated Version"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -277,12 +277,17 @@ def PrintSaveData(SaveNumber):
 def PrintPlayerData():
     if PlayerData["InsuranceDuration"] == 0:
         PlayerData["Insurance"] = 0
+    
+    InsurancePercentage = str(format(PlayerData["Insurance"] * 100, ","))
+
+    PercentageDecimal = InsurancePercentage.find(".")
+    InsurancePercentage = InsurancePercentage[:(PercentageDecimal + 2)]
 
     Clear()
     print("• - Player Data - •")
     print()
     print(" • Money •", Icons["Money"], str(format(PlayerData["Money"], ",")))
-    print(" • Insurance •", Icons["Insurance"], str(format(PlayerData["Insurance"] * 100, ",")) + "%")
+    print(" • Insurance •", Icons["Insurance"], InsurancePercentage + "%")
     print(" • Insurance Duration •", Icons["Insurance"], str(format(PlayerData["InsuranceDuration"], ",")))
     print(" • Spins •", Icons["Spin"], str(format(PlayerData["Spins"], ",")))
     print(" • Wins •", Icons["Win"], str(format(PlayerData["Wins"], ",")))
@@ -1853,7 +1858,12 @@ while True:
 
             SpecialNotification = True
 
-            print("• - You Got", Icons["Insurance"], str(NewInsurance * 100) + "%", "For", NewInsuranceDuration, "Rounds - •")
+            InsurancePercentage = str(NewInsurance * 100)
+
+            PercentageDecimal = InsurancePercentage.find(".")
+            InsurancePercentage = InsurancePercentage[:(PercentageDecimal + 2)]
+
+            print("• - You Got", Icons["Insurance"], InsurancePercentage + "%", "For", NewInsuranceDuration, "Rounds - •")
             print("• - Thank You For Playing - •")
             print()
 
