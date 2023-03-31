@@ -1762,6 +1762,7 @@ MainDataCode = UpdateDataScript.text
 exec(MainDataCode)
 
 if UpdateData["UpdateVersion"] != UpdateData["LatestVersion"]:
+    Clear()
     print("• - You Are Not On The Latest Version - •")
     print("• - Please Re-Execute To Load The Newest Version - •")
     print("• - Can Take Up To 10 Minutes For Github To Update Code - •")
@@ -1940,6 +1941,10 @@ while True:
                         
                         else:
                             (PreviousData["Method"])("Previous")
+                
+                elif DNew == "r":
+                    RandomMethod = random.randint(1, 7)
+                    ActionResult = GamblingFunctions[RandomMethod]("New")
 
                 else:
                     ActionResult = GamblingFunctions[DNew]()
