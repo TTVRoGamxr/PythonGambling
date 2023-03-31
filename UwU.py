@@ -1,1 +1,1 @@
-global LatestVersion = "0.1"
+return LatestVersion = "0.1"
