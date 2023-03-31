@@ -12,7 +12,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.1", "UpdateLog": ["• Fixed Insurance Decimal", "• 5 Save Data When Outdated Version"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.2", "UpdateLog": ["• 2 New Crates", "• Enhanced Crate Prints"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -24,7 +24,10 @@ CoinflipData = {"CoinflipIcons": {"heads": "⬆️ ", "tails": "⬇️ "}, "Mult
 RPSData = {"RPSIcons": {"rock": "🦴", "paper": "📃", "scissors": "✂️ "}, "RPSList": ["rock", "paper", "scissors"], "Multipliers": {"Win": 2.15, "Tie": 0.95, "Lose": 0}}
 CupsData = {"CupsIcons": {"WinItem": "💎", "LoseItem": "🕳️"}, "Multipliers": {"Win": 2.25, "Lose": 0}}
 EggsData = {"EggIcons": {"Safe": "🥚", "Bust": "💣"}, "RangeNumbers": {"Exact": 0, "SmallRange": 5, "MainRange": 15}, "Multipliers": {"Exact": 15, "SmallRange": 3.25, "MainRange": 1.75, "BaseRange": 1.35, "Lose": 0}}
-CratesData = {1: {"CrateName": "The Randomizer", "Cost": 200, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 75, "Value": 125}, 2: {"Name": "Scrap", "Weight": 30, "Value": 200}, 3: {"Name": "Egg", "Weight": 12, "Value": 260}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 450}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 750}}}}
+CratesData = {1: {"CrateName": "The Randomizer", "Cost": 200, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 75, "Value": 125}, 2: {"Name": "Scrap", "Weight": 30, "Value": 200}, 3: {"Name": "Egg", "Weight": 12, "Value": 260}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 450}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 750}}},
+              2: {"CrateName": "Old Crate", "Cost": 500, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 100, "Value": 375}, 2: {"Name": "Old Blanket", "Weight": 75, "Value": 450}, 3: {"Name": "Old Jar", "Weight": 30, "Value": 500}, 4: {"Name": "Old Golden Medal", "Weight": 10, "Value": 625}, 5: {"Name": "Old Gold Piece", "Weight": 4, "Value": 800}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 1100}}},
+              3: {"CrateName": "Riksy Rates", "Cost": 600, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 175, "Value": 500}, 2: {"Name": "Silver Coin", "Weight": 24, "Value": 750}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 5000}}},
+              }
 
 # Starting Values
 
@@ -97,6 +100,7 @@ def PrintCrateData(CrateNumber):
     NewCounter = 0
 
     print(str(CrateNumber), "• -", CrateInfo["CrateName"], Icons["Money"], CrateInfo["Cost"], "- •")
+    print()
 
     for ItemToAdd in range(len(CrateItemData)):
         NewItemData = CrateItemData[ItemToAdd + 1]
@@ -125,6 +129,8 @@ def PrintCrateData(CrateNumber):
         print("  • -", PrintedItem, "[" + Icons["Money"], str(WantedItem["Value"]) + "] -", ItemPercentage + "% - •")
         NewCounter = 0
     
+    print()
+    print("• -------------------------- •")
     print()
 
 def ChangePlayerData(DataName, DataValue):
@@ -1594,7 +1600,7 @@ def MethodCrates(GambleType):
                     if RolledCrateData["Name"] == RandomCrateItem:
                         WinningAmount = RolledCrateData["Value"]
 
-                print("• - You Opened", NewCrateData["CrateName"], "- •")
+                print("• - You Opened A •", NewCrateData["CrateName"], "- •")
                 print("• - You Got", RandomCrateItem, "- •")
                 print()
                     
