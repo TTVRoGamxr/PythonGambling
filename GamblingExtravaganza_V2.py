@@ -6,13 +6,14 @@ import random, time, os, math, requests
 LoadingBar = {0: "▯▯▯▯▯▯▯▯▯▯", 1: "▮▯▯▯▯▯▯▯▯▯", 2: "▮▮▯▯▯▯▯▯▯▯", 3: "▮▮▮▯▯▯▯▯▯▯", 4: "▮▮▮▮▯▯▯▯▯▯", 5: "▮▮▮▮▮▯▯▯▯▯", 6: "▮▮▮▮▮▮▯▯▯▯", 7: "▮▮▮▮▮▮▮▯▯▯", 8: "▮▮▮▮▮▮▮▮▯▯", 9: "▮▮▮▮▮▮▮▮▮▯", 10: "▮▮▮▮▮▮▮▮▮▮"}
 
 GameSettings = {"Icons": {"Money": "💵", "Insurance": "🩹", "Spin": "💫", "Win": "⭐", "Lose": "❌", "Save": "⏏️"}, "BetData": {"Min": 10, "Max": 25000}}
+InsuranceShopData = {"PricePerPercent": 25, "PricePerDuration": 75, "MaxPercent": 75, "MaxDuration": 45, "Discounts": {"Percent": {"Amount": 15, "Discount": 0.15}, "Duration": {"Amount": 5, "Discount": 0.025}}}
 
 Icons = GameSettings["Icons"]
 BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.2", "UpdateLog": ["• 2 New Crates", "• Enhanced Crate Prints"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.3", "UpdateLog": ["• Change Crate Selection", "• 2 New Crates", "• Buy Insurance Feature"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -24,9 +25,11 @@ CoinflipData = {"CoinflipIcons": {"heads": "⬆️ ", "tails": "⬇️ "}, "Mult
 RPSData = {"RPSIcons": {"rock": "🦴", "paper": "📃", "scissors": "✂️ "}, "RPSList": ["rock", "paper", "scissors"], "Multipliers": {"Win": 2.15, "Tie": 0.95, "Lose": 0}}
 CupsData = {"CupsIcons": {"WinItem": "💎", "LoseItem": "🕳️"}, "Multipliers": {"Win": 2.25, "Lose": 0}}
 EggsData = {"EggIcons": {"Safe": "🥚", "Bust": "💣"}, "RangeNumbers": {"Exact": 0, "SmallRange": 5, "MainRange": 15}, "Multipliers": {"Exact": 15, "SmallRange": 3.25, "MainRange": 1.75, "BaseRange": 1.35, "Lose": 0}}
-CratesData = {1: {"CrateName": "The Randomizer", "Cost": 200, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 75, "Value": 125}, 2: {"Name": "Scrap", "Weight": 30, "Value": 200}, 3: {"Name": "Egg", "Weight": 12, "Value": 260}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 450}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 750}}},
-              2: {"CrateName": "Old Crate", "Cost": 500, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 100, "Value": 375}, 2: {"Name": "Old Blanket", "Weight": 75, "Value": 450}, 3: {"Name": "Old Jar", "Weight": 30, "Value": 500}, 4: {"Name": "Old Golden Medal", "Weight": 10, "Value": 625}, 5: {"Name": "Old Gold Piece", "Weight": 4, "Value": 800}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 1100}}},
-              3: {"CrateName": "Riksy Rates", "Cost": 600, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 175, "Value": 500}, 2: {"Name": "Silver Coin", "Weight": 24, "Value": 750}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 5000}}},
+CratesData = {1: {"CrateName": "Randomizer Crate", "Cost": 175, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 75, "Value": 50}, 2: {"Name": "Scrap", "Weight": 30, "Value": 150}, 3: {"Name": "Egg", "Weight": 12, "Value": 200}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 275}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 500}}},
+              2: {"CrateName": "Basic Old Crate", "Cost": 250, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 100, "Value": 125}, 2: {"Name": "Old Blanket", "Weight": 75, "Value": 200}, 3: {"Name": "Old Jar", "Weight": 30, "Value": 275}, 4: {"Name": "Old Golden Medal", "Weight": 10, "Value": 450}, 5: {"Name": "Old Gold Piece", "Weight": 4, "Value": 600}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 800}}},
+              3: {"CrateName": "Riksy Rates Crate", "Cost": 450, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 175, "Value": 250}, 2: {"Name": "Silver Coin", "Weight": 24, "Value": 650}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 4500}}},
+              4: {"CrateName": "Matter Crate", "Cost": 750, "PrintedChances": [], "Items": {1: {"Name": "Useless Matter", "Weight": 2500, "Value": 500}, 2: {"Name": "Light Matter", "Weight": 1000, "Value": 1000}, 3: {"Name": "Handmade Gold Coin", "Weight": 600, "Value": 2500}, 4: {"Name": "Satanic Matter", "Weight": 450, "Value": 6666}, 5: {"Name": "Dark Matter", "Weight": 24, "Value": 9999}, 6: {"Name": "Enraged Satanic Matter", "Weight": 1, "Value": 66666}}},
+              5: {"CrateName": "Mysterious Crate", "Cost": 850, "PrintedChances": [], "Items": {1: {"Name": "Mystery Card", "Weight": 250, "Value": 650}, 2: {"Name": "Mystery Rag", "Weight": 200, "Value": 775}, 3: {"Name": "Mystery Cloak", "Weight": 75, "Value": 875}, 4: {"Name": "Mysterious Figure", "Weight": 24, "Value": 1250}, 5: {"Name": "Mystery Mix", "Weight": 1, "Value": 5555}}},
               }
 
 # Starting Values
@@ -99,7 +102,7 @@ def PrintCrateData(CrateNumber):
     CrateItemData = CrateInfo["Items"]
     NewCounter = 0
 
-    print(str(CrateNumber), "• -", CrateInfo["CrateName"], Icons["Money"], CrateInfo["Cost"], "- •")
+    print(str(CrateNumber), "• -", CrateInfo["CrateName"], Icons["Money"], str(format(CrateInfo["Cost"], ",")), "- •")
     print()
 
     for ItemToAdd in range(len(CrateItemData)):
@@ -126,12 +129,8 @@ def PrintCrateData(CrateNumber):
         PercentageDecimal = ItemPercentage.find(".")
         ItemPercentage = ItemPercentage[:(PercentageDecimal + 3)]
 
-        print("  • -", PrintedItem, "[" + Icons["Money"], str(WantedItem["Value"]) + "] -", ItemPercentage + "% - •")
+        print("  • -", PrintedItem, "[" + Icons["Money"], str(format(WantedItem["Value"], ",")) + "] -", ItemPercentage + "% - •")
         NewCounter = 0
-    
-    print()
-    print("• -------------------------- •")
-    print()
 
 def ChangePlayerData(DataName, DataValue):
     global PlayerData
@@ -300,6 +299,70 @@ def PrintPlayerData():
     print(" • Losses •", Icons["Lose"], str(format(PlayerData["Losses"], ",")))
     print(" • Save File •", Icons["Save"], " " + str(PlayerData["SaveFile"]))
 
+def HardReset():
+    global PlayerData
+
+    Clear()
+    print("• - Hard Reset Selected - •")
+    print("• - Hard Reset Removes All Data And Is Irreversible - •")
+
+    print()
+    print("• - Input 'Yes' Or 'No' - •")
+    print()
+    NewInput, NewChoice = CheckInput(input("Are you sure: "))
+
+    if NewInput == "String":
+        if NewChoice.lower() == "yes" or NewChoice.lower() == "no":
+            if NewChoice.lower() == "yes":
+                for i in range(5):
+
+                    WrittenStartData = [str(StartingData["Money"]) + ",", str(StartingData["Insurance"]) + ",", str(StartingData["InsuranceDuration"])]
+
+                    WriteData = open("C:\PythonGambling\DataSave_" + str(i + 1) + ".txt", "w")
+                    WriteData.writelines(WrittenStartData)
+                    WriteData.close()
+                
+                WrittenGlobalData = ["0,", "0,", "0"]
+
+                WriteData = open("C:\PythonGambling\GlobalData.txt", "w")
+                WriteData.writelines(WrittenGlobalData)
+                WriteData.close()
+
+                
+                for i in range(11):
+                    Clear()
+                    print("• - Hard Rest Initiated - •")
+                    print()
+                    print("      " + LoadingBar[i], str(i * 10) + "%")
+                    time.sleep(random.randint(1, 2) / 2)
+                
+                time.sleep(1)
+                Clear()
+
+                PlayerData["SaveFile"] = None
+                PlayerData["Money"] = 0
+                PlayerData["Insurance"] = 0
+                PlayerData['InsuranceDuration'] = 0
+                PlayerData["Spins"] = 0
+                PlayerData["Wins"] = 0
+                PlayerData["Losses"] = 0
+
+                print("• - Hard Reset Complete - •")
+                return "ActionSuccess"
+            
+            elif NewChoice.lower() == "no":
+                return "ActionSuccess"
+        
+        else:
+            Clear()
+            print("• - Input Must Be 'Yes' Or 'No' - •")
+            return "ActionError"
+    
+    else:
+        Clear()
+        print("• - Input Must Be 'Yes' Or 'No' - •")
+        return "ActionError"
+
 def ResetSaveData():
     global PlayerData
 
@@ -307,8 +370,8 @@ def ResetSaveData():
     print("• - Reset Data Selected - •")
     print()
 
-    print("Reset 1 Data File - 1")
-    print("Reset All Data - 2")
+    print("1 - Reset 1 Data File")
+    print("2 - Reset All Data")
 
     print()
     print("• - Input '1' Or '2' - •")
@@ -1568,62 +1631,88 @@ def MethodCrates(GambleType):
         print()
 
         for i in range(len(CratesData)):
-            PrintCrateData(i + 1)
+            CrateInfo = CratesData[i + 1]
+            print(str(i + 1), "• -", CrateInfo["CrateName"], Icons["Money"], str(format(CrateInfo["Cost"], ",")), "- •")
 
+        print()
         print("• - Input A Number Between 1 And", str(len(CratesData)), "- •")
         print()
-        InputType, NewCrate = CheckInput(input("Choose a number: "))
+
+        InputType, NewCrate = CheckInput(input("What crate would you like to view: "))
 
         if InputType == "Int" and NewCrate >= 1 and NewCrate <= len(CratesData):
-            NewCrateData = CratesData[NewCrate]
-            NewCrateChances = NewCrateData["PrintedChances"]
-            NewCrateItems = NewCrateData["Items"]
 
-            CratePrice = NewCrateData["Cost"]
+            Clear()
+            PrintCrateData(NewCrate)
+            print()
 
-            if CratePrice <= PlayerData["Money"]:
-                PreviousData["Method"] = MethodCrates
-                PreviousData["Crate"] = NewCrate
-                PreviousData["Attempts"] = 0
-                
-                ChangePlayerData("Money", -(CratePrice))
-                ChangePlayerData("Spins", 1)
+            print("1 - Buy Crate")
+            print("2 - Go Back")
 
-                Clear()
+            print()
+            print("• - Input '1' Or '2' - •")
+            print()
 
-                RandomCrateItem = random.choice(NewCrateChances)
-                WinningAmount = 0
+            InputType2, NewChoice = CheckInput(input("Would you like to buy this crate: "))
 
-                for i in range(len(NewCrateItems)):
-                    RolledCrateData = NewCrateItems[i + 1]
+            if InputType2 == "Int" and NewChoice == 1 or NewChoice == 2:
+                if NewChoice == 1:
+                    NewCrateData = CratesData[NewCrate]
+                    NewCrateChances = NewCrateData["PrintedChances"]
+                    NewCrateItems = NewCrateData["Items"]
 
-                    if RolledCrateData["Name"] == RandomCrateItem:
-                        WinningAmount = RolledCrateData["Value"]
+                    CratePrice = NewCrateData["Cost"]
 
-                print("• - You Opened A •", NewCrateData["CrateName"], "- •")
-                print("• - You Got", RandomCrateItem, "- •")
-                print()
+                    if CratePrice <= PlayerData["Money"]:
+                        PreviousData["Method"] = MethodCrates
+                        PreviousData["Crate"] = NewCrate
+                        PreviousData["Attempts"] = 0
+                        
+                        ChangePlayerData("Money", -(CratePrice))
+                        ChangePlayerData("Spins", 1)
+
+                        Clear()
+
+                        RandomCrateItem = random.choice(NewCrateChances)
+                        WinningAmount = 0
+
+                        for i in range(len(NewCrateItems)):
+                            RolledCrateData = NewCrateItems[i + 1]
+
+                            if RolledCrateData["Name"] == RandomCrateItem:
+                                WinningAmount = RolledCrateData["Value"]
+
+                        print("• - You Opened A •", NewCrateData["CrateName"], "- •")
+                        print("• - You Got", RandomCrateItem, "- •")
+                        print()
+                            
+                        if (WinningAmount - CratePrice) <= -1:
+                            print("• - Your Item Is Worth", Icons["Money"], str(format(WinningAmount, ",")), "• -" + Icons["Money"], str(CratePrice - WinningAmount), "Profit - •")
+                        
+                        elif (WinningAmount - CratePrice) >= 0:
+                            print("• - Your Item Is Worth", Icons["Money"], str(format(WinningAmount, ",")), "•", Icons["Money"], str(WinningAmount - CratePrice), "Profit - •")
+                        
+                        if PlayerData["InsuranceDuration"] >= 1:
+                            ChangePlayerData("InsuranceDuration", -1)
+
+                        ChangePlayerData("Money", WinningAmount)
+                        return "GambleSuccess"
                     
-                if (WinningAmount - CratePrice) <= -1:
-                    print("• - Your Item Is Worth", Icons["Money"], str(format(WinningAmount, ",")), "• -" + Icons["Money"], str(CratePrice - WinningAmount), "Profit - •")
-                
-                elif (WinningAmount - CratePrice) >= 0:
-                    print("• - Your Item Is Worth", Icons["Money"], str(format(WinningAmount, ",")), "•", Icons["Money"], str(WinningAmount - CratePrice), "Profit - •")
-                
-                if PlayerData["InsuranceDuration"] >= 1:
-                    ChangePlayerData("InsuranceDuration", -1)
-
-                ChangePlayerData("Money", WinningAmount)
-                return "GambleSuccess"
+                    else:
+                        Clear()
+                        print("• - You Don't Have Enough Money - •")
+                        return "GambleError"
+                    
+                elif NewChoice == 2:
+                    return MethodCrates("New")
             
             else:
                 Clear()
-                print("• - Crate Price Must Be Below Your Balance - •")
+                print("• - Input Must Be '1' Or '2' - •")
                 return "GambleError" 
         
         else:
             Clear()
-            print("• - Bet Must Be A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
             print("• - Crate Must Be A Number Between 1 And", str(len(CratesData)), "- •")
             return "GambleError"
     
@@ -1675,7 +1764,7 @@ def MethodCrates(GambleType):
             
             else:
                 Clear()
-                print("• - Crate Price Must Be Below Your Balance - •")
+                print("• - You Don't Have Enough Money - •")
                 return "GambleError" 
         
         else:
@@ -1683,6 +1772,91 @@ def MethodCrates(GambleType):
             print("• - Bet Must Be A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
             print("• - Crate Must Be A Number Between 1 And", str(len(CratesData)), "- •")
             return "GambleError"
+
+def BuyInsurance():
+    DiscountAmount = InsuranceShopData["Discounts"]
+    InsuranceDiscount = DiscountAmount["Percent"]
+    DurationDiscount = DiscountAmount["Duration"]
+
+    InsuranceDiscountDisplay = InsuranceDiscount["Discount"] * 10000 / 100
+    InsuranceDiscountDisplay = str(InsuranceDiscountDisplay)
+
+    InsurancePercentageDecimal = InsuranceDiscountDisplay.find(".")
+    InsuranceDiscountDisplay = InsuranceDiscountDisplay[:(InsurancePercentageDecimal + 2)]
+
+    DurationDiscountDisplay = DurationDiscount["Discount"] * 10000 / 100
+    DurationDiscountDisplay = str(InsuranceDiscountDisplay)
+
+    DurationPercentageDecimal = DurationDiscountDisplay.find(".")
+    DurationDiscountDisplay = DurationDiscountDisplay[:(DurationPercentageDecimal + 2)]
+
+    PrintPlayerData()
+    print()
+
+    print("• - Insurance Shop - •")
+    print()
+
+    print(Icons["Money"], str(InsuranceShopData["PricePerPercent"]), "• Per 1% Insurance [Max •", str(InsuranceShopData["MaxPercent"]) + "]")
+    print("    • -", InsuranceDiscountDisplay + "% Off When Purchsing", str(InsuranceDiscount["Amount"]) + "%+ Insurance - •")
+    print(Icons["Money"], str(InsuranceShopData["PricePerDuration"]), "• Per 1 Round [Max •", str(InsuranceShopData["MaxDuration"]) + "]")
+    print("    • -", DurationDiscountDisplay + "% Off When Buying", str(DurationDiscount["Amount"]) + "+ Rounds - •")
+
+    print()
+    print("• - Input A Number Between 1 and", str(InsuranceShopData["MaxPercent"]), "- •")
+    print()
+
+    InputType, NewInsurance = CheckInput(input("How much insurance [Percent] would you like to buy: "))
+
+    print()
+    print("• - Input A Number Between 1 and", str(InsuranceShopData["MaxDuration"]), "- •")
+    print()
+
+    InputType2, NewDuration = CheckInput(input("How much insurance [Duration] would you like to buy: "))
+
+    if InputType == "Int" and InputType2 == "Int" and NewInsurance >= 1 and NewInsurance <= InsuranceShopData["MaxPercent"] and NewDuration >= 1 and NewDuration <= InsuranceShopData["MaxDuration"]:
+        Clear()
+
+        TotalInsuranceCost = InsuranceShopData["PricePerPercent"] * NewInsurance
+        TotalDurationCost = InsuranceShopData["PricePerDuration"] * NewDuration
+
+        if NewInsurance >= InsuranceDiscount["Amount"]:
+            TotalInsuranceCost = TotalInsuranceCost * (1 - InsuranceDiscount["Discount"])
+        
+        if NewDuration >= DurationDiscount["Amount"]:
+            TotalDurationCost = TotalDurationCost * (1 - DurationDiscount["Discount"])
+        
+        TotalCost = math.ceil(TotalDurationCost + TotalInsuranceCost)
+        
+        if PlayerData["Money"] >= TotalCost:
+            print("• - You Bought", str(format(NewInsurance, ",")) + "% Insurance For A Duration Of", str(format(NewDuration, ",")), "Rounds- •")
+            print("• - You Spent", Icons["Money"], str(format(TotalCost, ",")), "- •")
+
+            ChangePlayerData("Money", -(TotalCost))
+
+            if PlayerData["Insurance"] + NewInsurance > InsuranceShopData["MaxPercent"]:
+                ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
+                ChangePlayerData("Insurance", (NewInsurance / 100))
+
+            else:
+                ChangePlayerData("Insurance", (NewInsurance / 100))
+            
+            if PlayerData["InsuranceDuration"] + NewInsurance > InsuranceShopData["MaxDuration"]:
+                ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
+                ChangePlayerData("InsuranceDuration", NewDuration)
+
+            else:
+                ChangePlayerData("InsuranceDuration", NewDuration)
+
+            SaveData()
+            return "ActionSuccess"
+
+        else:
+            print("• - You Don't Have Enough Money - •")
+    
+    else:
+        Clear()
+        print("• - Insurance [Percentage] Must Be A Number Between 1 And", InsuranceShopData["MaxPercent"], "- •")
+        print("• - Insurance [Duration] Must Be A Number Between 1 And", InsuranceShopData["MaxDuration"], "- •")
 
 def FirstSetup():
     Clear()
@@ -1722,7 +1896,7 @@ def FirstSetup():
     Clear()
 
 Clear()
-GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "Methods": [1, 2, 3, 4, 5, 6, 7, 'R', 'P', 'C', 'S', 'D']}
+GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "x": HardReset, "k": BuyInsurance, "Methods": [1, 2, 3, 4, 5, 6, 7, 'R', 'K', 'P', 'C', 'S', 'D', "X"]}
 
 # Setup Check
 
@@ -1910,10 +2084,12 @@ while True:
         print("• 🥚 | Egg - 6")
         print("• 📦 | Crates - 7")
         print("• ❓ | Random - R")
+        print("•", Icons["Insurance"], "| Buy Insurance - K")
         print("• 🔁 | Previous Method - P")
         print("• 📁 | Change Save File - C")
         print("• ⏏️  | Manual Save Data - S")
         print("• ♻️  | Reset Data - D")
+        print("• ♻️  | Hard Reset - X")
 
         print()
         print("• - Input A Number One Of The Following", '%s' % ', '.join(map(str, GamblingFunctions["Methods"])), "- •")
