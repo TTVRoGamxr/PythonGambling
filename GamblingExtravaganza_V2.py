@@ -13,7 +13,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.4.6", "UpdateLog": ["• Fixed Profit Display On Crates", "• Infinite Attempts On Crates", "• Balanced Crate"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.4.7", "UpdateLog": ["• Fixed Blackjack Tie On 17"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -1880,7 +1880,7 @@ def MethodBJ(GambleType):
                                     GameRunning = False
                                     return "GambleSuccess"
                                 
-                                elif PlayerCards > 17 and PlayerCards == BotCards:
+                                elif PlayerCards >= 17 and PlayerCards == BotCards:
                                     WinAmount = math.ceil(NewBet * BJMultipliers["Tie"])
 
                                     print("• - You Tied - •")
@@ -1969,7 +1969,7 @@ def MethodBJ(GambleType):
                                     GameRunning = False
                                     return "GambleSuccess"
                                 
-                                elif PlayerCards > 17 and PlayerCards == BotCards:
+                                elif PlayerCards >= 17 and PlayerCards == BotCards:
                                     WinAmount = math.ceil(NewBet * BJMultipliers["Tie"])
 
                                     print("• - You Tied - •")
