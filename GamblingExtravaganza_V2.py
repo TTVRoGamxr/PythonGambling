@@ -13,7 +13,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.4.5", "UpdateLog": ["• Fixed Profit Display On Crates", "• Infinite Attempts On Crates", "• Balanced Crate"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.4.6", "UpdateLog": ["• Fixed Profit Display On Crates", "• Infinite Attempts On Crates", "• Balanced Crate"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -29,7 +29,7 @@ BJData = {"BJIcons": {"BJ": "🃏", "Win": "⭐", "Tie": "🤝", "Bust": "💣"}
 CratesData = {1: {"CrateName": "Randomizer Crate", "Cost": 175, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 75, "Value": 50}, 2: {"Name": "Scrap", "Weight": 30, "Value": 150}, 3: {"Name": "Egg", "Weight": 12, "Value": 200}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 275}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 500}}},
               2: {"CrateName": "Basic Old Crate", "Cost": 250, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 100, "Value": 125}, 2: {"Name": "Old Blanket", "Weight": 75, "Value": 200}, 3: {"Name": "Old Jar", "Weight": 30, "Value": 275}, 4: {"Name": "Old Golden Medal", "Weight": 10, "Value": 450}, 5: {"Name": "Old Gold Piece", "Weight": 4, "Value": 600}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 800}}},
               3: {"CrateName": "Riksy Rates Crate", "Cost": 450, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 175, "Value": 250}, 2: {"Name": "Silver Coin", "Weight": 24, "Value": 650}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 4500}}},
-              4: {"CrateName": "Matter Crate", "Cost": 750, "PrintedChances": [], "Items": {1: {"Name": "Useless Matter", "Weight": 2600, "Value": 500}, 2: {"Name": "Light Matter", "Weight": 1000, "Value": 1000}, 3: {"Name": "Handmade Gold Coin", "Weight": 225, "Value": 2500}, 4: {"Name": "Satanic Matter", "Weight": 150, "Value": 6666}, 5: {"Name": "Dark Matter", "Weight": 24, "Value": 9999}, 6: {"Name": "Enraged Satanic Matter", "Weight": 1, "Value": 66666}}},
+              4: {"CrateName": "Matter Crate", "Cost": 750, "PrintedChances": [], "Items": {1: {"Name": "Useless Matter", "Weight": 2650, "Value": 500}, 2: {"Name": "Light Matter", "Weight": 1000, "Value": 750}, 3: {"Name": "Handmade Gold Coin", "Weight": 225, "Value": 2500}, 4: {"Name": "Satanic Matter", "Weight": 150, "Value": 6666}, 5: {"Name": "Dark Matter", "Weight": 24, "Value": 9999}, 6: {"Name": "Enraged Satanic Matter", "Weight": 1, "Value": 66666}}},
               5: {"CrateName": "Mysterious Crate", "Cost": 850, "PrintedChances": [], "Items": {1: {"Name": "Mystery Card", "Weight": 250, "Value": 650}, 2: {"Name": "Mystery Rag", "Weight": 200, "Value": 775}, 3: {"Name": "Mystery Cloak", "Weight": 75, "Value": 875}, 4: {"Name": "Mysterious Figure", "Weight": 24, "Value": 1250}, 5: {"Name": "Mystery Mix", "Weight": 1, "Value": 5555}}},
               }
 
