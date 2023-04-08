@@ -13,7 +13,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.3", "UpdateLog": ["• Change Crate Selection", "• 2 New Crates", "• Buy Insurance Feature"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.4", "UpdateLog": ["• Created Blackjack Gamemode", "• Refined Data Saving"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -25,6 +25,7 @@ CoinflipData = {"CoinflipIcons": {"heads": "⬆️ ", "tails": "⬇️ "}, "Mult
 RPSData = {"RPSIcons": {"rock": "🦴", "paper": "📃", "scissors": "✂️ "}, "RPSList": ["rock", "paper", "scissors"], "Multipliers": {"Win": 2.15, "Tie": 0.95, "Lose": 0}}
 CupsData = {"CupsIcons": {"WinItem": "💎", "LoseItem": "🕳️"}, "Multipliers": {"Win": 2.25, "Lose": 0}}
 EggsData = {"EggIcons": {"Safe": "🥚", "Bust": "💣"}, "RangeNumbers": {"Exact": 0, "SmallRange": 5, "MainRange": 15}, "Multipliers": {"Exact": 15, "SmallRange": 3.25, "MainRange": 1.75, "BaseRange": 1.35, "Lose": 0}}
+BJData = {"BJIcons": {"BJ": "🃏", "Win": "⭐", "Tie": "🤝", "Bust": "💣"}, "CardRange": {"Min": 1, "Max": 11}, "Multipliers": {"BJ": 10, "Win": 3, "Tie": 0.95, "Lose": 0}}
 CratesData = {1: {"CrateName": "Randomizer Crate", "Cost": 175, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 75, "Value": 50}, 2: {"Name": "Scrap", "Weight": 30, "Value": 150}, 3: {"Name": "Egg", "Weight": 12, "Value": 200}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 275}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 500}}},
               2: {"CrateName": "Basic Old Crate", "Cost": 250, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 100, "Value": 125}, 2: {"Name": "Old Blanket", "Weight": 75, "Value": 200}, 3: {"Name": "Old Jar", "Weight": 30, "Value": 275}, 4: {"Name": "Old Golden Medal", "Weight": 10, "Value": 450}, 5: {"Name": "Old Gold Piece", "Weight": 4, "Value": 600}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 800}}},
               3: {"CrateName": "Riksy Rates Crate", "Cost": 450, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 175, "Value": 250}, 2: {"Name": "Silver Coin", "Weight": 24, "Value": 650}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 4500}}},
@@ -135,6 +136,7 @@ def PrintCrateData(CrateNumber):
 def ChangePlayerData(DataName, DataValue):
     global PlayerData
     PlayerData[DataName] += DataValue
+    SaveData()
 
 def SetSaveFile(SafeSave):
     global PlayerData
@@ -1772,6 +1774,252 @@ def MethodCrates(GambleType):
             print("• - Bet Must Be A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
             print("• - Crate Must Be A Number Between 1 And", str(len(CratesData)), "- •")
             return "GambleError"
+    
+def MethodBJ(GambleType):
+    BJIcons = BJData["BJIcons"]
+    BJCardRange = BJData["CardRange"]
+    BJMultipliers = BJData["Multipliers"]
+
+    if GambleType == "New":
+        PreviousData["Method"] = MethodBJ
+        PrintPlayerData()
+        print()
+
+        print("• - Blackjack Selected - •")
+        print()
+
+        print("Blackjack • x" + str(BJMultipliers["BJ"]))
+        print("Win • x" + str(BJMultipliers["Win"]))
+        print("Tie • x" + str(BJMultipliers["Tie"]))
+        print("Lose • x" + str(BJMultipliers["Lose"]))
+
+        BotCards = random.randint(BJCardRange["Min"], BJCardRange["Max"])
+        PlayerCards = random.randint(BJCardRange["Min"], BJCardRange["Max"])
+
+        GameRunning = True
+
+        def PrintRoundData():
+            print("• - Bots Cards Add Up To", BotCards, "- •")
+            print("• - Your Cards Add Up To", PlayerCards, "- •")
+        
+        print()
+        print("• - Input A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
+        print()
+        InputType, NewBet = CheckInput(input("How much would you like to bet: "))
+
+        if InputType == "Int":
+            if NewBet <= PlayerData["Money"]:
+                if NewBet >= BetData["Min"] and NewBet <= BetData["Max"]:
+                    ChangePlayerData("Money", -(NewBet))
+                    ChangePlayerData("Spins", 1)
+
+                    while GameRunning:
+                        Clear()
+                        PrintRoundData()
+
+                        print("1 • - Hit - •")
+                        print("2 • - Stand - •")
+
+                        print()
+                        print("• - Input '1' Or '2' - •")
+                        print()
+
+                        InputType2, NewAction = CheckInput(input("How much would you like to bet: "))
+
+                        if InputType2 == "Int" and NewAction == 1 or NewAction == 2:
+                            if NewAction == 1:
+                                NewPlayerAmount = random.randint(BJCardRange["Min"], BJCardRange["Max"])
+                                NewBotAmount = random.randint(BJCardRange["Min"], BJCardRange["Max"])
+
+                                BotCards += NewBotAmount
+                                PlayerCards += NewPlayerAmount
+
+                                Clear()
+
+                                print("• - You Got •", str(NewPlayerAmount), "- •")
+                                print("• - The Bot Got •", str(NewBotAmount), "- •")
+
+                                print()
+                                input("Press Enter To Continue: ")
+
+                                Clear()
+                                PrintRoundData()
+                                print()
+
+                                if PlayerCards < 21 and BotCards < 21:
+                                    pass
+
+                                elif PlayerCards == 21 and BotCards != 21:
+                                    WinAmount = math.ceil(NewBet * BJMultipliers["BJ"])
+
+                                    print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
+                                    print("• -", BJIcons["BJ"], "You Got A Blackjack", BJIcons["BJ"], "- •")
+                                    print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit - •")
+                                    ChangePlayerData("Money", WinAmount)
+                                    ChangePlayerData("Wins", 1)
+                                    GameRunning = False
+                                    return "GambleSuccess"
+
+                                elif BotCards > 21 and PlayerCards < 21:
+                                    WinAmount = math.ceil(NewBet * BJMultipliers["Win"])
+
+                                    print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
+                                    print("• -", BJIcons["Win"], "The Bot Busted", BJIcons["Win"], "- •")
+                                    print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit - •")
+                                    ChangePlayerData("Money", WinAmount)
+                                    ChangePlayerData("Wins", 1)
+                                    GameRunning = False
+                                    return "GambleSuccess"
+                                
+                                elif PlayerCards > 17 and PlayerCards == BotCards:
+                                    WinAmount = math.ceil(NewBet * BJMultipliers["Tie"])
+
+                                    print("• - You Tied - •")
+                                    print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit [5% Tie Tax] - •")
+                                    ChangePlayerData("Money", WinAmount)  
+                                    GameRunning = False
+                                    return "GambleSuccess"  
+                                
+                                elif PlayerCards > 21:
+                                    if PlayerData["InsuranceDuration"] >= 1:
+                                        LossAmount = math.ceil(NewBet * (1 - PlayerData["Insurance"]))
+
+                                        print("• -", Icons["Lose"], "You Lose", Icons["Lose"], "- •")
+                                        print("• -", BJIcons["Bust"], "You Busted", BJIcons["Bust"], "- •")
+                                        print("• - You Lost", Icons["Money"], str(format(LossAmount, ",")), "- •")
+
+                                        ChangePlayerData("Money", math.ceil(NewBet - LossAmount))
+                                    
+                                    else:
+                                        print("• -", Icons["Lose"], "You Lose", Icons["Lose"], "- •")
+                                        print("• -", BJIcons["Bust"], "You Busted", BJIcons["Bust"], "- •")
+                                        print("• - You Lost", Icons["Money"], str(format(NewBet, ",")), "- •")
+
+                                        ChangePlayerData("Money", (NewBet * BJMultipliers["Lose"]))
+
+                                    ChangePlayerData("Losses", 1)
+                                    GameRunning = False
+                                    return "GambleSuccess"
+                            
+                            elif NewAction == 2:
+                                while BotCards < 17:
+                                    BotCards += random.randint(BJCardRange["Min"], BJCardRange["Max"])
+                                
+                                Clear()
+                                PrintRoundData()
+                                print()
+
+                                if PlayerCards == 21 and BotCards != 21:
+                                    WinAmount = math.ceil(NewBet * BJMultipliers["BJ"])
+
+                                    print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
+                                    print("• -", BJIcons["BJ"], "You Got A Blackjack", BJIcons["BJ"], "- •")
+                                    print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit - •")
+                                    ChangePlayerData("Money", WinAmount)
+                                    ChangePlayerData("Wins", 1)
+                                    GameRunning = False
+                                    return "GambleSuccess"
+
+                                elif BotCards > 21 and PlayerCards < 21:
+                                    WinAmount = math.ceil(NewBet * BJMultipliers["Win"])
+
+                                    print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
+                                    print("• -", BJIcons["Win"], "The Bot Busted", BJIcons["Win"], "- •")
+                                    print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit - •")
+                                    ChangePlayerData("Money", WinAmount)
+                                    ChangePlayerData("Wins", 1)
+                                    GameRunning = False
+                                    return "GambleSuccess"
+                                
+                                elif BotCards < PlayerCards:
+                                    WinAmount = math.ceil(NewBet * BJMultipliers["Win"])
+
+                                    print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
+                                    print("• -", BJIcons["Win"], "You Were Higher Than The Bot", BJIcons["Win"], "- •")
+                                    print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit - •")
+                                    ChangePlayerData("Money", WinAmount)
+                                    ChangePlayerData("Wins", 1)
+                                    GameRunning = False
+                                    return "GambleSuccess"
+                                
+                                elif PlayerCards > 17 and PlayerCards == BotCards:
+                                    WinAmount = math.ceil(NewBet * BJMultipliers["Tie"])
+
+                                    print("• - You Tied - •")
+                                    print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit [5% Tie Tax] - •")
+                                    ChangePlayerData("Money", WinAmount)
+                                    GameRunning = False
+                                    return "GambleSuccess"  
+
+                                elif PlayerCards < BotCards:
+                                    if PlayerData["InsuranceDuration"] >= 1:
+                                        LossAmount = math.ceil(NewBet * (1 - PlayerData["Insurance"]))
+
+                                        print("• -", Icons["Lose"], "You Lose", Icons["Lose"], "- •")
+                                        print("• -", BJIcons["Bust"], "The Bot Was Higher Than You", BJIcons["Bust"], "- •")
+                                        print("• - You Lost", Icons["Money"], str(format(LossAmount, ",")), "- •")
+
+                                        ChangePlayerData("Money", math.ceil(NewBet - LossAmount))
+                                    
+                                    else:
+                                        print("• -", Icons["Lose"], "You Lose", Icons["Lose"], "- •")
+                                        print("• -", BJIcons["Bust"], "The Bot Was Higher Than You", BJIcons["Bust"], "- •")
+                                        print("• - You Lost", Icons["Money"], str(format(NewBet, ",")), "- •")
+
+                                        ChangePlayerData("Money", (NewBet * BJMultipliers["Lose"]))
+
+                                    ChangePlayerData("Losses", 1)
+                                    GameRunning = False
+                                    return "GambleSuccess"
+                                
+                                elif PlayerCards > 21:
+                                    if PlayerData["InsuranceDuration"] >= 1:
+                                        LossAmount = math.ceil(NewBet * (1 - PlayerData["Insurance"]))
+
+                                        print("• -", Icons["Lose"], "You Lose", Icons["Lose"], "- •")
+                                        print("• -", BJIcons["Bust"], "You Busted", BJIcons["Bust"], "- •")
+                                        print("• - You Lost", Icons["Money"], str(format(LossAmount, ",")), "- •")
+
+                                        ChangePlayerData("Money", math.ceil(NewBet - LossAmount))
+                                    
+                                    else:
+                                        print("• -", Icons["Lose"], "You Lose", Icons["Lose"], "- •")
+                                        print("• -", BJIcons["Bust"], "You Busted", BJIcons["Bust"], "- •")
+                                        print("• - You Lost", Icons["Money"], str(format(NewBet, ",")), "- •")
+
+                                        ChangePlayerData("Money", (NewBet * BJMultipliers["Lose"]))
+
+                                    ChangePlayerData("Losses", 1)
+                        
+                        else:
+                            Clear()
+                            print("• - Input Must Be '1' Or '2' - •")
+
+                            print()
+                            input("Press Enter To Continue: ")
+
+                        if PlayerData["InsuranceDuration"] >= 1:
+                            ChangePlayerData("InsuranceDuration", -1)
+
+                else:
+                    Clear()
+                    print("• - Bet Must Be A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
+                    return "GambleError"
+            
+            else:
+                Clear()
+                print("• - Bet Must Be Below Your Balance - •")
+                return "GambleError"
+        
+        else:
+            Clear()
+            print("• - Bet Must Be A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
+            return "GambleError"
+    
+    elif GambleType == "Previous":
+        return MethodBJ("New")
+        
+
 
 def BuyInsurance():
     DiscountAmount = InsuranceShopData["Discounts"]
@@ -1896,7 +2144,7 @@ def FirstSetup():
     Clear()
 
 Clear()
-GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "x": HardReset, "k": BuyInsurance, "Methods": [1, 2, 3, 4, 5, 6, 7, 'R', 'K', 'P', 'C', 'S', 'D', "X"]}
+GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, 8: MethodBJ, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "x": HardReset, "k": BuyInsurance, "Methods": [1, 2, 3, 4, 5, 6, 7, 'R', 'K', 'P', 'C', 'S', 'D', "X"]}
 
 # Setup Check
 
@@ -2083,6 +2331,7 @@ while True:
         print("• 🥤 | Cups - 5")
         print("• 🥚 | Egg - 6")
         print("• 📦 | Crates - 7")
+        print("• 🃏 | Blackjack - 8")
         print("• ❓ | Random - R")
         print("•", Icons["Insurance"], "| Buy Insurance - K")
         print("• 🔁 | Previous Method - P")
