@@ -1799,8 +1799,8 @@ def MethodBJ(GambleType):
         GameRunning = True
 
         def PrintRoundData():
-            print("• - Bots Cards Add Up To", BotCards, "- •")
             print("• - Your Cards Add Up To", PlayerCards, "- •")
+            print("• - Bots Cards Add Up To", BotCards, "- •")
         
         print()
         print("• - Input A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
@@ -1817,6 +1817,7 @@ def MethodBJ(GambleType):
                         Clear()
                         PrintRoundData()
 
+                        print()
                         print("1 • - Hit - •")
                         print("2 • - Stand - •")
 
