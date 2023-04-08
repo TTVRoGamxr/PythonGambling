@@ -13,7 +13,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.4.1", "UpdateLog": ["• Balanced Blackjack", "• Fix Blackjack Bug"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.4.2", "UpdateLog": ["• Fixed Bugs"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -1832,14 +1832,14 @@ def MethodBJ(GambleType):
                                 NewPlayerAmount = random.randint(BJCardRange["Min"], BJCardRange["Max"])
                                 NewBotAmount = random.randint(BJCardRange["Min"], BJCardRange["Max"])
 
-                                if BotCards < 17:
-                                    BotCards += NewBotAmount
-                                PlayerCards += NewPlayerAmount
-
                                 Clear()
 
                                 print("• - You Got •", str(NewPlayerAmount), "- •")
-                                print("• - The Bot Got •", str(NewBotAmount), "- •")
+
+                                if BotCards < 17:
+                                    print("• - The Bot Got •", str(NewBotAmount), "- •")
+                                    BotCards += NewBotAmount
+                                PlayerCards += NewPlayerAmount
 
                                 print()
                                 input("Press Enter To Continue: ")
