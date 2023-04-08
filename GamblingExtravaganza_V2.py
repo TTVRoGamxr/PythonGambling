@@ -13,7 +13,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.4.4", "UpdateLog": ["• Fixed Profit Display On Crates", "• Balanced Crate"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.4.5", "UpdateLog": ["• Fixed Profit Display On Crates", "• Infinite Attempts On Crates", "• Balanced Crate"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -1732,7 +1732,7 @@ def MethodCrates(GambleType):
             if CratePrice <= PlayerData["Money"]:
                 PreviousData["Method"] = MethodCrates
                 PreviousData["Crate"] = NewCrate
-                PreviousData["Attempts"] += 0
+                PreviousData["Attempts"] += 1
                 
                 ChangePlayerData("Money", -(CratePrice))
                 ChangePlayerData("Spins", 1)
