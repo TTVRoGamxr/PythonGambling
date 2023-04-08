@@ -13,7 +13,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.4.3", "UpdateLog": ["• Fixed Bugs", "• Fixed Blackjack Win Multiplier"], "SpecialShoutouts": ["• CesarTheGamer#2616"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.4.4", "UpdateLog": ["• Fixed Profit Display On Crates", "• Balanced Crate"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -29,7 +29,7 @@ BJData = {"BJIcons": {"BJ": "🃏", "Win": "⭐", "Tie": "🤝", "Bust": "💣"}
 CratesData = {1: {"CrateName": "Randomizer Crate", "Cost": 175, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 75, "Value": 50}, 2: {"Name": "Scrap", "Weight": 30, "Value": 150}, 3: {"Name": "Egg", "Weight": 12, "Value": 200}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 275}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 500}}},
               2: {"CrateName": "Basic Old Crate", "Cost": 250, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 100, "Value": 125}, 2: {"Name": "Old Blanket", "Weight": 75, "Value": 200}, 3: {"Name": "Old Jar", "Weight": 30, "Value": 275}, 4: {"Name": "Old Golden Medal", "Weight": 10, "Value": 450}, 5: {"Name": "Old Gold Piece", "Weight": 4, "Value": 600}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 800}}},
               3: {"CrateName": "Riksy Rates Crate", "Cost": 450, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 175, "Value": 250}, 2: {"Name": "Silver Coin", "Weight": 24, "Value": 650}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 4500}}},
-              4: {"CrateName": "Matter Crate", "Cost": 750, "PrintedChances": [], "Items": {1: {"Name": "Useless Matter", "Weight": 2500, "Value": 500}, 2: {"Name": "Light Matter", "Weight": 1000, "Value": 1000}, 3: {"Name": "Handmade Gold Coin", "Weight": 600, "Value": 2500}, 4: {"Name": "Satanic Matter", "Weight": 450, "Value": 6666}, 5: {"Name": "Dark Matter", "Weight": 24, "Value": 9999}, 6: {"Name": "Enraged Satanic Matter", "Weight": 1, "Value": 66666}}},
+              4: {"CrateName": "Matter Crate", "Cost": 750, "PrintedChances": [], "Items": {1: {"Name": "Useless Matter", "Weight": 2600, "Value": 500}, 2: {"Name": "Light Matter", "Weight": 1000, "Value": 1000}, 3: {"Name": "Handmade Gold Coin", "Weight": 225, "Value": 2500}, 4: {"Name": "Satanic Matter", "Weight": 150, "Value": 6666}, 5: {"Name": "Dark Matter", "Weight": 24, "Value": 9999}, 6: {"Name": "Enraged Satanic Matter", "Weight": 1, "Value": 66666}}},
               5: {"CrateName": "Mysterious Crate", "Cost": 850, "PrintedChances": [], "Items": {1: {"Name": "Mystery Card", "Weight": 250, "Value": 650}, 2: {"Name": "Mystery Rag", "Weight": 200, "Value": 775}, 3: {"Name": "Mystery Cloak", "Weight": 75, "Value": 875}, 4: {"Name": "Mysterious Figure", "Weight": 24, "Value": 1250}, 5: {"Name": "Mystery Mix", "Weight": 1, "Value": 5555}}},
               }
 
@@ -1689,10 +1689,10 @@ def MethodCrates(GambleType):
                         print()
                             
                         if (WinningAmount - CratePrice) <= -1:
-                            print("• - Your Item Is Worth", Icons["Money"], str(format(WinningAmount, ",")), "• -" + Icons["Money"], str(CratePrice - WinningAmount), "Profit - •")
+                            print("• - Your Item Is Worth", Icons["Money"], str(format(WinningAmount, ",")), "• -" + Icons["Money"], str(format((CratePrice - WinningAmount), ",")), "Profit - •")
                         
                         elif (WinningAmount - CratePrice) >= 0:
-                            print("• - Your Item Is Worth", Icons["Money"], str(format(WinningAmount, ",")), "•", Icons["Money"], str(WinningAmount - CratePrice), "Profit - •")
+                            print("• - Your Item Is Worth", Icons["Money"], str(format(WinningAmount, ",")), "•", Icons["Money"], str(format((WinningAmount - CratePrice), ",")), "Profit - •")
                         
                         if PlayerData["InsuranceDuration"] >= 1:
                             ChangePlayerData("InsuranceDuration", -1)
@@ -1826,7 +1826,7 @@ def MethodBJ(GambleType):
                         print("• - Input '1' Or '2' - •")
                         print()
 
-                        InputType2, NewAction = CheckInput(input("How much would you like to bet: "))
+                        InputType2, NewAction = CheckInput(input("What action would you like: "))
 
                         if InputType2 == "Int" and NewAction == 1 or NewAction == 2:
                             if NewAction == 1:
@@ -1837,7 +1837,7 @@ def MethodBJ(GambleType):
 
                                 print("• - You Got •", str(NewPlayerAmount), "- •")
 
-                                if BotCards < 17:
+                                if BotCards < 17 and PlayerCards <= 21:
                                     print("• - The Bot Got •", str(NewBotAmount), "- •")
                                     BotCards += NewBotAmount
                                 PlayerCards += NewPlayerAmount
@@ -1920,7 +1920,7 @@ def MethodBJ(GambleType):
                                     print("lol")
                             
                             elif NewAction == 2:
-                                while BotCards < 17:
+                                while BotCards < 17 and PlayerCards <= 21:
                                     BotCards += random.randint(BJCardRange["Min"], BJCardRange["Max"])
                                 
                                 Clear()
