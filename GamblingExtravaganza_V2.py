@@ -13,19 +13,19 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.4.7", "UpdateLog": ["• Fixed Blackjack Tie On 17"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.4.8", "UpdateLog": ["• Fixed Blackjack Multipliers", "• Balanced Overall Systems"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
 GamblingFunctions = {}
 
 DiceData = {"RollNumbers": {"MaxRoll": 100, "MediumRoll": 90, "SmallRoll": 55, "LoseRoll": 54}, "Multipliers": {"MaxWin": 15, "MediumWin": 5, "SmallWin": 1.75, "Lose": 0}}
-SlotsData = {"SlotIcons": {"Jackpot": "⭐", "Win": "💵", "Lose": "❌", "IconsList": "⭐" + "💵"*4 + "❌"*3}, "Multipliers": {"Jackpot": 50, "Win": 3, "Lose": 0}}
+SlotsData = {"SlotIcons": {"Jackpot": "⭐", "Win": "💵", "Lose": "❌", "IconsList": "⭐" + "💵"*4 + "❌"*3}, "Multipliers": {"Jackpot": 50, "Win": 2, "Lose": 0}}
 CoinflipData = {"CoinflipIcons": {"heads": "⬆️ ", "tails": "⬇️ "}, "Multipliers": {"Win": 1.75, "Lose": 0}, "Chances": ["heads", "tails"]}
 RPSData = {"RPSIcons": {"rock": "🦴", "paper": "📃", "scissors": "✂️ "}, "RPSList": ["rock", "paper", "scissors"], "Multipliers": {"Win": 2.15, "Tie": 0.95, "Lose": 0}}
 CupsData = {"CupsIcons": {"WinItem": "💎", "LoseItem": "🕳️"}, "Multipliers": {"Win": 2.25, "Lose": 0}}
 EggsData = {"EggIcons": {"Safe": "🥚", "Bust": "💣"}, "RangeNumbers": {"Exact": 0, "SmallRange": 5, "MainRange": 15}, "Multipliers": {"Exact": 15, "SmallRange": 3.25, "MainRange": 1.75, "BaseRange": 1.35, "Lose": 0}}
-BJData = {"BJIcons": {"BJ": "🃏", "Win": "⭐", "Tie": "🤝", "Bust": "💣"}, "CardRange": {"Min": 1, "Max": 11}, "Multipliers": {"BJ": 5, "Win": 1.25, "Tie": 0.95, "Lose": 0}}
+BJData = {"BJIcons": {"BJ": "🃏", "Win": "⭐", "Tie": "🤝", "Bust": "💣"}, "CardRange": {"Min": 1, "Max": 11}, "Multipliers": {"BJ": 3, "Win": 2, "Tie": 0.95, "Lose": 0}}
 CratesData = {1: {"CrateName": "Randomizer Crate", "Cost": 175, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 75, "Value": 50}, 2: {"Name": "Scrap", "Weight": 30, "Value": 150}, 3: {"Name": "Egg", "Weight": 12, "Value": 200}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 275}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 500}}},
               2: {"CrateName": "Basic Old Crate", "Cost": 250, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 100, "Value": 125}, 2: {"Name": "Old Blanket", "Weight": 75, "Value": 200}, 3: {"Name": "Old Jar", "Weight": 30, "Value": 275}, 4: {"Name": "Old Golden Medal", "Weight": 10, "Value": 450}, 5: {"Name": "Old Gold Piece", "Weight": 4, "Value": 600}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 800}}},
               3: {"CrateName": "Riksy Rates Crate", "Cost": 450, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 175, "Value": 250}, 2: {"Name": "Silver Coin", "Weight": 24, "Value": 650}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 4500}}},
