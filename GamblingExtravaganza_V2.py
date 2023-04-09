@@ -13,14 +13,14 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.4.8", "UpdateLog": ["• Fixed Blackjack Multipliers", "• Balanced Overall Systems"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.4.8b", "UpdateLog": ["• Fixed Blackjack Multipliers", "• Balanced Overall Systems"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
 GamblingFunctions = {}
 
 DiceData = {"RollNumbers": {"MaxRoll": 100, "MediumRoll": 90, "SmallRoll": 55, "LoseRoll": 54}, "Multipliers": {"MaxWin": 15, "MediumWin": 5, "SmallWin": 1.75, "Lose": 0}}
-SlotsData = {"SlotIcons": {"Jackpot": "⭐", "Win": "💵", "Lose": "❌", "IconsList": "⭐" + "💵"*4 + "❌"*3}, "Multipliers": {"Jackpot": 50, "Win": 2, "Lose": 0}}
+SlotsData = {"SlotIcons": {"Jackpot": "⭐", "Win": "💵", "Lose": "❌", "IconsList": "⭐" + "💵"*4 + "❌"*5}, "Multipliers": {"Jackpot": 50, "Win": 2, "Lose": 0}}
 CoinflipData = {"CoinflipIcons": {"heads": "⬆️ ", "tails": "⬇️ "}, "Multipliers": {"Win": 1.75, "Lose": 0}, "Chances": ["heads", "tails"]}
 RPSData = {"RPSIcons": {"rock": "🦴", "paper": "📃", "scissors": "✂️ "}, "RPSList": ["rock", "paper", "scissors"], "Multipliers": {"Win": 2.15, "Tie": 0.95, "Lose": 0}}
 CupsData = {"CupsIcons": {"WinItem": "💎", "LoseItem": "🕳️"}, "Multipliers": {"Win": 2.25, "Lose": 0}}
@@ -703,7 +703,7 @@ def MethodSlots(GambleType):
                         ChangePlayerData("Money", WinAmount)
                         ChangePlayerData("Wins", 1)
 
-                    elif SlotOutcome.count(SlotsIcons["Win"]) >= 2 and SlotOutcome.count(SlotsIcons["Lose"]) == 0:
+                    elif (SlotOutcome.count(SlotsIcons["Win"]) >= 2 or SlotOutcome.count(SlotsIcons["Jackpot"])) and SlotOutcome.count(SlotsIcons["Lose"]) == 0:
                         WinAmount = math.ceil(NewBet * SlotsMultiplier["Win"])
 
                         print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
@@ -780,7 +780,7 @@ def MethodSlots(GambleType):
                         ChangePlayerData("Money", WinAmount)
                         ChangePlayerData("Wins", 1)
 
-                    elif SlotOutcome.count(SlotsIcons["Win"]) >= 2 and SlotOutcome.count(SlotsIcons["Lose"]) == 0:
+                    elif (SlotOutcome.count(SlotsIcons["Win"]) >= 2 or SlotOutcome.count(SlotsIcons["Jackpot"])) and SlotOutcome.count(SlotsIcons["Lose"]) == 0:
                         WinAmount = math.ceil(NewBet * SlotsMultiplier["Win"])
 
                         print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
