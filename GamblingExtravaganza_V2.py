@@ -2366,6 +2366,16 @@ while True:
 
         if Result == "ActionSuccess":
             GamblingActive = True
+        
+        if PlayerData["Insurance"] > InsuranceShopData["MaxPercent"] / 100:
+            ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
+            ChangePlayerData("Insurance", InsuranceShopData["MaxPercent"] / 100)
+            SaveData()
+            
+        if PlayerData["InsuranceDuration"] > InsuranceShopData["MaxDuration"] / 100:
+            ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
+            ChangePlayerData("InsuranceDuration", InsuranceShopData["MaxDuration"] / 100)
+            SaveData()
 
     if GamblingActive == True:
         PrintPlayerData()
