@@ -284,6 +284,17 @@ def PrintSaveData(SaveNumber):
 def PrintPlayerData():
     if PlayerData["InsuranceDuration"] == 0:
         PlayerData["Insurance"] = 0
+        SaveData()
+
+    if PlayerData["Insurance"] > InsuranceShopData["MaxPercent"] / 100:
+        ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
+        ChangePlayerData("Insurance", InsuranceShopData["MaxPercent"] / 100)
+        SaveData()
+            
+    if PlayerData["InsuranceDuration"] > InsuranceShopData["MaxDuration"]:
+        ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
+        ChangePlayerData("InsuranceDuration", InsuranceShopData["MaxDuration"])
+        SaveData()
     
     InsurancePercentage = str(format(PlayerData["Insurance"] * 100, ","))
 
@@ -2340,16 +2351,6 @@ while True:
             ChangePlayerData("Insurance", NewInsurance)
             ChangePlayerData("InsuranceDuration", NewInsuranceDuration)
 
-            if PlayerData["Insurance"] > InsuranceShopData["MaxPercent"] / 100:
-                ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
-                ChangePlayerData("Insurance", InsuranceShopData["MaxPercent"] / 100)
-                SaveData()
-            
-            if PlayerData["InsuranceDuration"] > InsuranceShopData["MaxDuration"] / 100:
-                ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
-                ChangePlayerData("InsuranceDuration", InsuranceShopData["MaxDuration"] / 100)
-                SaveData()
-
             SaveData()
         
         if SpecialNotification == True:
@@ -2366,16 +2367,6 @@ while True:
 
         if Result == "ActionSuccess":
             GamblingActive = True
-        
-        if PlayerData["Insurance"] > InsuranceShopData["MaxPercent"] / 100:
-            ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
-            ChangePlayerData("Insurance", InsuranceShopData["MaxPercent"] / 100)
-            SaveData()
-            
-        if PlayerData["InsuranceDuration"] > InsuranceShopData["MaxDuration"] / 100:
-            ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
-            ChangePlayerData("InsuranceDuration", InsuranceShopData["MaxDuration"] / 100)
-            SaveData()
 
     if GamblingActive == True:
         PrintPlayerData()
