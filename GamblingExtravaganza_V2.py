@@ -2325,14 +2325,6 @@ while True:
             elif InsuranceChance >= 50:
                 NewInsurance = (random.randint(5, 15) / 100)
                 NewInsuranceDuration = random.randint(1, 3)
-            
-            if PlayerData["Insurance"] > InsuranceShopData["MaxPercent"] / 100:
-                ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
-                ChangePlayerData("Insurance", InsuranceShopData["MaxPercent"] / 100)
-            
-            if PlayerData["InsuranceDuration"] > InsuranceShopData["MaxDuration"] / 100:
-                ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
-                ChangePlayerData("InsuranceDuration", InsuranceShopData["MaxDuration"] / 100)
 
             SpecialNotification = True
 
@@ -2347,6 +2339,16 @@ while True:
 
             ChangePlayerData("Insurance", NewInsurance)
             ChangePlayerData("InsuranceDuration", NewInsuranceDuration)
+
+            if PlayerData["Insurance"] > InsuranceShopData["MaxPercent"] / 100:
+                ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
+                ChangePlayerData("Insurance", InsuranceShopData["MaxPercent"] / 100)
+                SaveData()
+            
+            if PlayerData["InsuranceDuration"] > InsuranceShopData["MaxDuration"] / 100:
+                ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
+                ChangePlayerData("InsuranceDuration", InsuranceShopData["MaxDuration"] / 100)
+                SaveData()
 
             SaveData()
         
