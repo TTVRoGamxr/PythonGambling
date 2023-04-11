@@ -5,15 +5,15 @@ import random, time, os, math, requests
 
 LoadingBar = {0: "▯▯▯▯▯▯▯▯▯▯", 1: "▮▯▯▯▯▯▯▯▯▯", 2: "▮▮▯▯▯▯▯▯▯▯", 3: "▮▮▮▯▯▯▯▯▯▯", 4: "▮▮▮▮▯▯▯▯▯▯", 5: "▮▮▮▮▮▯▯▯▯▯", 6: "▮▮▮▮▮▮▯▯▯▯", 7: "▮▮▮▮▮▮▮▯▯▯", 8: "▮▮▮▮▮▮▮▮▯▯", 9: "▮▮▮▮▮▮▮▮▮▯", 10: "▮▮▮▮▮▮▮▮▮▮"}
 
-GameSettings = {"Icons": {"Money": "💵", "Insurance": "🩹", "Spin": "💫", "Win": "⭐", "Lose": "❌", "Save": "⏏️"}, "BetData": {"Min": 10, "Max": 25000}}
-InsuranceShopData = {"PricePerPercent": 25, "PricePerDuration": 75, "MaxPercent": 75, "MaxDuration": 45, "Discounts": {"Percent": {"Amount": 15, "Discount": 0.15}, "Duration": {"Amount": 5, "Discount": 0.025}}}
+GameSettings = {"Icons": {"Money": "💵", "Insurance": "🩹", "Spin": "💫", "Win": "⭐", "Lose": "❌", "Save": "⏏️"}, "BetData": {"Min": 10, "Max": 30000}, "MaxPreviousAttempts": 5}
+InsuranceShopData = {"PricePerPercent": 30, "PricePerDuration": 100, "MaxPercent": 50, "MaxDuration": 100, "Discounts": {"Percent": {"Amount": 20, "Discount": 0.05}, "Duration": {"Amount": 10, "Discount": 0.025}}}
 
 Icons = GameSettings["Icons"]
 BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.4.8b", "UpdateLog": ["• Fixed Blackjack Multipliers", "• Balanced Overall Systems"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.5", "UpdateLog": ["• Increased Insurance Prices", "• Lowered Insurance Discounts", "• Raised Max Insurance Duration", "• Lowered Max Insurance", "• Buying Insurance Only Works If Buying Under Max", "• Raised Max Bet", "• Lowered Max Previous Attempts"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -2079,7 +2079,7 @@ def BuyInsurance():
     print("• - Insurance Shop - •")
     print()
 
-    print(Icons["Money"], str(InsuranceShopData["PricePerPercent"]), "• Per 1% Insurance [Max •", str(InsuranceShopData["MaxPercent"]) + "]")
+    print(Icons["Money"], str(InsuranceShopData["PricePerPercent"]), "• Per 1% Insurance [Max •", str(InsuranceShopData["MaxPercent"]) + "%]")
     print("    • -", InsuranceDiscountDisplay + "% Off When Purchsing", str(InsuranceDiscount["Amount"]) + "%+ Insurance - •")
     print(Icons["Money"], str(InsuranceShopData["PricePerDuration"]), "• Per 1 Round [Max •", str(InsuranceShopData["MaxDuration"]) + "]")
     print("    • -", DurationDiscountDisplay + "% Off When Buying", str(DurationDiscount["Amount"]) + "+ Rounds - •")
@@ -2111,27 +2111,34 @@ def BuyInsurance():
         TotalCost = math.ceil(TotalDurationCost + TotalInsuranceCost)
         
         if PlayerData["Money"] >= TotalCost:
-            print("• - You Bought", str(format(NewInsurance, ",")) + "% Insurance For A Duration Of", str(format(NewDuration, ",")), "Rounds- •")
-            print("• - You Spent", Icons["Money"], str(format(TotalCost, ",")), "- •")
-
-            ChangePlayerData("Money", -(TotalCost))
-
-            if PlayerData["Insurance"] + NewInsurance > InsuranceShopData["MaxPercent"]:
-                ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
-                ChangePlayerData("Insurance", (NewInsurance / 100))
-
-            else:
-                ChangePlayerData("Insurance", (NewInsurance / 100))
+            if PlayerData["Insurance"] + NewInsurance > InsuranceShopData["MaxPercent"] or PlayerData["InsuranceDuration"] + NewInsurance > InsuranceShopData["MaxDuration"]:
+                print("• - Buying To Much Insurance Or Duration - •")
+                print()
+                input("Press enter to continue: ")
             
-            if PlayerData["InsuranceDuration"] + NewInsurance > InsuranceShopData["MaxDuration"]:
-                ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
-                ChangePlayerData("InsuranceDuration", NewDuration)
-
             else:
-                ChangePlayerData("InsuranceDuration", NewDuration)
 
-            SaveData()
-            return "ActionSuccess"
+                print("• - You Bought", str(format(NewInsurance, ",")) + "% Insurance For A Duration Of", str(format(NewDuration, ",")), "Rounds- •")
+                print("• - You Spent", Icons["Money"], str(format(TotalCost, ",")), "- •")
+
+                ChangePlayerData("Money", -(TotalCost))
+
+                if PlayerData["Insurance"] + NewInsurance > InsuranceShopData["MaxPercent"]:
+                    ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
+                    ChangePlayerData("Insurance", (NewInsurance / 100))
+
+                else:
+                    ChangePlayerData("Insurance", (NewInsurance / 100))
+                
+                if PlayerData["InsuranceDuration"] + NewInsurance > InsuranceShopData["MaxDuration"]:
+                    ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
+                    ChangePlayerData("InsuranceDuration", NewDuration)
+
+                else:
+                    ChangePlayerData("InsuranceDuration", NewDuration)
+
+                SaveData()
+                return "ActionSuccess"
 
         else:
             print("• - You Don't Have Enough Money - •")
@@ -2179,7 +2186,7 @@ def FirstSetup():
     Clear()
 
 Clear()
-GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, 8: MethodBJ, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "x": HardReset, "k": BuyInsurance, "Methods": [1, 2, 3, 4, 5, 6, 7, 'R', 'K', 'P', 'C', 'S', 'D', "X"]}
+GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, 8: MethodBJ, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "x": HardReset, "k": BuyInsurance, "Methods": [1, 2, 3, 4, 5, 6, 7, 8, 'R', 'K', 'P', 'C', 'S', 'D', "X"]}
 
 # Setup Check
 
@@ -2284,10 +2291,10 @@ while True:
             if MoneyChance == 100:
                 NewMoney = random.randint(50, 250)
             
-            elif MoneyChance >= 80:
+            elif MoneyChance >= 85:
                 NewMoney = random.randint(25, 150)
 
-            elif MoneyChance >= 65:
+            elif MoneyChance >= 75:
                 NewMoney = random.randint(10, 100)
 
             SpecialNotification = True
@@ -2308,16 +2315,24 @@ while True:
             NewInsuranceDuration = 1
 
             if InsuranceChance == 100:
-                NewInsurance = (random.randint(25, 60) / 100)
+                NewInsurance = (random.randint(25, 50) / 100)
                 NewInsuranceDuration = random.randint(2, 8)
 
             elif InsuranceChance >= 75:
-                NewInsurance = (random.randint(10, 45) / 100)
+                NewInsurance = (random.randint(10, 30) / 100)
                 NewInsuranceDuration = random.randint(1, 5)
             
             elif InsuranceChance >= 50:
-                NewInsurance = (random.randint(5, 25) / 100)
+                NewInsurance = (random.randint(5, 15) / 100)
                 NewInsuranceDuration = random.randint(1, 3)
+            
+            if PlayerData["Insurance"] > InsuranceShopData["MaxPercent"] / 100:
+                ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
+                ChangePlayerData("Insurance", InsuranceShopData["MaxPercent"] / 100)
+            
+            if PlayerData["InsuranceDuration"] > InsuranceShopData["MaxDuration"] / 100:
+                ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
+                ChangePlayerData("InsuranceDuration", InsuranceShopData["MaxDuration"] / 100)
 
             SpecialNotification = True
 
@@ -2407,9 +2422,9 @@ while True:
                     ActionResult = GamblingFunctions[DNew](True)
 
                 elif DNew == "p":
-                    if PreviousData["Attempts"] >= 10:
+                    if PreviousData["Attempts"] >= GameSettings["MaxPreviousAttempts"]:
                         Clear()
-                        print("• - You Can Only Redo An Action 10 Times - •")
+                        print("• - You Can Only Redo An Action Up To", str(GameSettings["MaxPreviousAttempts"]), "Times - •")
                     
                     else:
                         if PreviousData["Method"] == None:
