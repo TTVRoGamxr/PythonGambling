@@ -2293,20 +2293,20 @@ while True:
     
     SpecialNotification = False
     
-    if PlayerData["Money"] <= 100 and PlayerData["SaveFile"] != None:
+    if PlayerData["Money"] <= 50 and PlayerData["SaveFile"] != None:
         MoneyChance = random.randint(1, 100)
 
-        if MoneyChance >= 65:
+        if MoneyChance >= 75:
             NewMoney = 10
 
             if MoneyChance == 100:
-                NewMoney = random.randint(50, 250)
+                NewMoney = random.randint(50, 175)
             
             elif MoneyChance >= 85:
-                NewMoney = random.randint(25, 150)
+                NewMoney = random.randint(25, 100)
 
             elif MoneyChance >= 75:
-                NewMoney = random.randint(10, 100)
+                NewMoney = random.randint(10, 75)
 
             SpecialNotification = True
 
@@ -2326,15 +2326,15 @@ while True:
             NewInsuranceDuration = 1
 
             if InsuranceChance == 100:
-                NewInsurance = (random.randint(25, 50) / 100)
+                NewInsurance = (random.randint(25, 35) / 100)
                 NewInsuranceDuration = random.randint(2, 8)
 
             elif InsuranceChance >= 75:
-                NewInsurance = (random.randint(10, 30) / 100)
+                NewInsurance = (random.randint(15, 25) / 100)
                 NewInsuranceDuration = random.randint(1, 5)
             
             elif InsuranceChance >= 50:
-                NewInsurance = (random.randint(5, 15) / 100)
+                NewInsurance = (random.randint(2, 10) / 100)
                 NewInsuranceDuration = random.randint(1, 3)
 
             SpecialNotification = True
