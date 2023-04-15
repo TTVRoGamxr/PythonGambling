@@ -14,7 +14,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.6", "UpdateLog": ["• Beg Action", "• All In Gamemode", "• Decreased Starting Money", "• Decreased Starting Insurance", "• Fixed Crate Chances", "• Bug Fixes"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.6.1", "UpdateLog": ["• Beg Action", "• All In Gamemode", "• Decreased Starting Money", "• Decreased Starting Insurance", "• Fixed Crate Chances", "• Bug Fixes"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -27,7 +27,7 @@ RPSData = {"RPSIcons": {"rock": "🦴", "paper": "📃", "scissors": "✂️ "},
 CupsData = {"CupsIcons": {"WinItem": "💎", "LoseItem": "🕳️"}, "Multipliers": {"Win": 2.25, "Lose": 0}}
 EggsData = {"EggIcons": {"Safe": "🥚", "Bust": "💣"}, "RangeNumbers": {"Exact": 0, "SmallRange": 5, "MainRange": 15}, "Multipliers": {"Exact": 15, "SmallRange": 3.25, "MainRange": 1.75, "BaseRange": 1.35, "Lose": 0}}
 BJData = {"BJIcons": {"BJ": "🃏", "Win": "⭐", "Tie": "🤝", "Bust": "💣"}, "CardRange": {"Min": 1, "Max": 11}, "Multipliers": {"BJ": 3, "Win": 2, "Tie": 0.95, "Lose": 0}}
-AllInData = {"Chances": {"Big Win": 30, "Win": 18, "Lose": 17, "Insurance": ["Successful"]*50 + ["Unsuccessful"]*50}, "Multipliers": {"Big Win": 3.5, "Win": 1.65, "Lose": 0}}
+AllInData = {"Chances": {"Big Win": 30, "Win": 21, "Lose": 20, "Insurance": ["Successful"]*50 + ["Unsuccessful"]*50}, "Multipliers": {"Big Win": 3.5, "Win": 1.65, "Lose": 0}}
 CratesData = {1: {"CrateName": "Randomizer Crate", "Cost": 175, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 100, "Value": 50}, 2: {"Name": "Scrap", "Weight": 75, "Value": 150}, 3: {"Name": "Egg", "Weight": 20, "Value": 200}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 275}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 500}}},
               2: {"CrateName": "Basic Old Crate", "Cost": 250, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 120, "Value": 125}, 2: {"Name": "Old Blanket", "Weight": 60, "Value": 200}, 3: {"Name": "Old Jar", "Weight": 45, "Value": 275}, 4: {"Name": "Old Golden Medal", "Weight": 25, "Value": 450}, 5: {"Name": "Old Gold Piece", "Weight": 9, "Value": 600}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 800}}},
               3: {"CrateName": "Riksy Rates Crate", "Cost": 450, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 150, "Value": 400}, 2: {"Name": "Silver Coin", "Weight": 49, "Value": 650}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 2000}}},
@@ -2081,6 +2081,7 @@ def MethodAllIn(GambleType):
             print("• - Win • x" + str(AllInMultipliers["Win"]), "- •")
             print("• - Lose • x" + str(AllInMultipliers["Lose"]), "• [50% Chance Insurance Fails]- •")
 
+            print()
             print("Yes - Continue")
             print("No - Quit")
 
