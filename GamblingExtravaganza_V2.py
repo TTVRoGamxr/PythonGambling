@@ -7,13 +7,14 @@ LoadingBar = {0: "▯▯▯▯▯▯▯▯▯▯", 1: "▮▯▯▯▯▯▯▯�
 
 GameSettings = {"Icons": {"Money": "💵", "Insurance": "🩹", "Spin": "💫", "Win": "⭐", "Lose": "❌", "Save": "⏏️"}, "BetData": {"Min": 10, "Max": 30000}, "MaxPreviousAttempts": 5}
 InsuranceShopData = {"PricePerPercent": 30, "PricePerDuration": 100, "MaxPercent": 50, "MaxDuration": 100, "Discounts": {"Percent": {"Amount": 20, "Discount": 0.05}, "Duration": {"Amount": 10, "Discount": 0.025}}}
+BegActionData = {"Phrases": {"Good": ["Oh you poor thing", "Awww", "Here you go", "Have a great day", "Hopefully this helps", "Enjoy", "Here money :D"], "Bad": ["Imagine begging", "Ewww, a beggar", "Bro's actually begging", "smh... You beggars", "Oh my god, go away!"]}, "PeopleType": ["Celebrity", "Business Owner", "Rich Kid", "Kind Random Person", "Annoying Random Person"], "Chances": ["Celebrity"] + ["Business Owner"]*49 + ["Rich Kid"]*150 + ["Kind Random Person"]*200 + ["Annoying Random Person"]*600, "MainData": {"MinMoney": 0, "MaxMoney": 175, "VisitAmounts": [1]*75 + [2]*15 + [5]*9 + [10]}, "Multipliers": {"Celebrity": {"Min": 500, "Max": 1000}, "Business Owner": {"Min": 200, "Max": 500}, "Rich Kid": {"Min": 75, "Max": 200}, "Kind Random Person": {"Min": 10, "Max": 100}, "Annoying Random Person": {"Min": 0, "Max": 0}}}
 
 Icons = GameSettings["Icons"]
 BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.5", "UpdateLog": ["• Increased Insurance Prices", "• Lowered Insurance Discounts", "• Raised Max Insurance Duration", "• Lowered Max Insurance", "• Buying Insurance Only Works If Buying Under Max", "• Raised Max Bet", "• Lowered Max Previous Attempts"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.6", "UpdateLog": ["• Beg Action", "• All In Gamemode", "• Decreased Starting Money", "• Decreased Starting Insurance", "• Fixed Crate Chances", "• Bug Fixes"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -26,16 +27,17 @@ RPSData = {"RPSIcons": {"rock": "🦴", "paper": "📃", "scissors": "✂️ "},
 CupsData = {"CupsIcons": {"WinItem": "💎", "LoseItem": "🕳️"}, "Multipliers": {"Win": 2.25, "Lose": 0}}
 EggsData = {"EggIcons": {"Safe": "🥚", "Bust": "💣"}, "RangeNumbers": {"Exact": 0, "SmallRange": 5, "MainRange": 15}, "Multipliers": {"Exact": 15, "SmallRange": 3.25, "MainRange": 1.75, "BaseRange": 1.35, "Lose": 0}}
 BJData = {"BJIcons": {"BJ": "🃏", "Win": "⭐", "Tie": "🤝", "Bust": "💣"}, "CardRange": {"Min": 1, "Max": 11}, "Multipliers": {"BJ": 3, "Win": 2, "Tie": 0.95, "Lose": 0}}
-CratesData = {1: {"CrateName": "Randomizer Crate", "Cost": 175, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 75, "Value": 50}, 2: {"Name": "Scrap", "Weight": 30, "Value": 150}, 3: {"Name": "Egg", "Weight": 12, "Value": 200}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 275}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 500}}},
-              2: {"CrateName": "Basic Old Crate", "Cost": 250, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 100, "Value": 125}, 2: {"Name": "Old Blanket", "Weight": 75, "Value": 200}, 3: {"Name": "Old Jar", "Weight": 30, "Value": 275}, 4: {"Name": "Old Golden Medal", "Weight": 10, "Value": 450}, 5: {"Name": "Old Gold Piece", "Weight": 4, "Value": 600}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 800}}},
-              3: {"CrateName": "Riksy Rates Crate", "Cost": 450, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 175, "Value": 250}, 2: {"Name": "Silver Coin", "Weight": 24, "Value": 650}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 4500}}},
-              4: {"CrateName": "Matter Crate", "Cost": 750, "PrintedChances": [], "Items": {1: {"Name": "Useless Matter", "Weight": 2700, "Value": 500}, 2: {"Name": "Light Matter", "Weight": 850, "Value": 750}, 3: {"Name": "Handmade Gold Coin", "Weight": 175, "Value": 2500}, 4: {"Name": "Satanic Matter", "Weight": 75, "Value": 6666}, 5: {"Name": "Dark Matter", "Weight": 9, "Value": 9999}, 6: {"Name": "Enraged Satanic Matter", "Weight": 1, "Value": 66666}}},
-              5: {"CrateName": "Mysterious Crate", "Cost": 850, "PrintedChances": [], "Items": {1: {"Name": "Mystery Card", "Weight": 250, "Value": 650}, 2: {"Name": "Mystery Rag", "Weight": 200, "Value": 775}, 3: {"Name": "Mystery Cloak", "Weight": 75, "Value": 875}, 4: {"Name": "Mysterious Figure", "Weight": 24, "Value": 1250}, 5: {"Name": "Mystery Mix", "Weight": 1, "Value": 5555}}},
+AllInData = {"Chances": {"Big Win": 30, "Win": 18, "Lose": 17, "Insurance": ["Successful"]*50 + ["Unsuccessful"]*50}, "Multipliers": {"Big Win": 3.5, "Win": 1.65, "Lose": 0}}
+CratesData = {1: {"CrateName": "Randomizer Crate", "Cost": 175, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 100, "Value": 50}, 2: {"Name": "Scrap", "Weight": 75, "Value": 150}, 3: {"Name": "Egg", "Weight": 20, "Value": 200}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 275}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 500}}},
+              2: {"CrateName": "Basic Old Crate", "Cost": 250, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 120, "Value": 125}, 2: {"Name": "Old Blanket", "Weight": 60, "Value": 200}, 3: {"Name": "Old Jar", "Weight": 45, "Value": 275}, 4: {"Name": "Old Golden Medal", "Weight": 25, "Value": 450}, 5: {"Name": "Old Gold Piece", "Weight": 9, "Value": 600}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 800}}},
+              3: {"CrateName": "Riksy Rates Crate", "Cost": 450, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 150, "Value": 400}, 2: {"Name": "Silver Coin", "Weight": 49, "Value": 650}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 2000}}},
+              4: {"CrateName": "Matter Crate", "Cost": 750, "PrintedChances": [], "Items": {1: {"Name": "Useless Matter", "Weight": 500, "Value": 500}, 2: {"Name": "Light Matter", "Weight": 300, "Value": 750}, 3: {"Name": "Handmade Gold Coin", "Weight": 140, "Value": 1250}, 4: {"Name": "Silver Matter", "Weight": 50, "Value": 4500}, 5: {"Name": "Dark Matter", "Weight": 9, "Value": 7500}, 6: {"Name": "Mystery Matter", "Weight": 1, "Value": 15000}}},
+              5: {"CrateName": "Mysterious Crate", "Cost": 850, "PrintedChances": [], "Items": {1: {"Name": "Mystery Card", "Weight": 210, "Value": 650}, 2: {"Name": "Mystery Rag", "Weight": 170, "Value": 800}, 3: {"Name": "Mystery Cloak", "Weight": 110, "Value": 900}, 4: {"Name": "Mysterious Figure", "Weight": 9, "Value": 1250}, 5: {"Name": "Mystery Mix", "Weight": 1, "Value": 7500}}},
               }
 
 # Starting Values
 
-StartingData = {"Money": 150, "Insurance": 0.25, "InsuranceDuration": 3}
+StartingData = {"Money": 125, "Insurance": 0.15, "InsuranceDuration": 3}
 
 # Player Data
 
@@ -284,17 +286,14 @@ def PrintSaveData(SaveNumber):
 def PrintPlayerData():
     if PlayerData["InsuranceDuration"] == 0:
         PlayerData["Insurance"] = 0
-        SaveData()
 
     if PlayerData["Insurance"] > InsuranceShopData["MaxPercent"] / 100:
         ChangePlayerData("Insurance", -(PlayerData["Insurance"]))
         ChangePlayerData("Insurance", InsuranceShopData["MaxPercent"] / 100)
-        SaveData()
             
     if PlayerData["InsuranceDuration"] > InsuranceShopData["MaxDuration"]:
         ChangePlayerData("InsuranceDuration", -(PlayerData["InsuranceDuration"]))
         ChangePlayerData("InsuranceDuration", InsuranceShopData["MaxDuration"])
-        SaveData()
     
     InsurancePercentage = str(format(PlayerData["Insurance"] * 100, ","))
 
@@ -506,7 +505,7 @@ def MethodDice(GambleType):
         if InputType == "Int":
             if NewBet <= PlayerData["Money"]:
                 if NewBet >= BetData["Min"] and NewBet <= BetData["Max"]:
-                    RolledNumber = random.randint(1, 100)
+                    RolledNumber = random.randint(1, DiceRollNumbers["MaxRoll"])
 
                     PreviousData["Method"] = MethodDice
                     PreviousData["Bet"] = NewBet
@@ -589,7 +588,7 @@ def MethodDice(GambleType):
         if InputType == "Int":
             if NewBet <= PlayerData["Money"]:
                 if NewBet >= BetData["Min"] and NewBet <= BetData["Max"]:
-                    RolledNumber = random.randint(1, 100)
+                    RolledNumber = random.randint(1, DiceRollNumbers["MaxRoll"])
 
                     PreviousData["Method"] = MethodDice
                     PreviousData["Bet"] = NewBet
@@ -2064,8 +2063,106 @@ def MethodBJ(GambleType):
     
     elif GambleType == "Previous":
         return MethodBJ("New")
-        
 
+def MethodAllIn(GambleType):
+    AllInChances = AllInData["Chances"]
+    AllInMultipliers = AllInData["Multipliers"]
+            
+    if GambleType == "New":
+        if PlayerData["Money"] > BetData["Min"]:
+            PreviousData["Method"] = MethodAllIn
+            PrintPlayerData()
+            print()
+
+            print("• - All In Selected - •")
+            print()
+
+            print("• - Big Win • x" + str(AllInMultipliers["Big Win"]), "- •")
+            print("• - Win • x" + str(AllInMultipliers["Win"]), "- •")
+            print("• - Lose • x" + str(AllInMultipliers["Lose"]), "• [50% Chance Insurance Fails]- •")
+
+            print("Yes - Continue")
+            print("No - Quit")
+
+            print()
+            print("• - Input 'Yes' Or 'No' - •")
+            print()
+
+            InputType, NewChoice = CheckInput(input("Would you like bet all " + Icons["Money"] + " " + str(format(PlayerData["Money"], ","))+ " : "))
+
+            if InputType == "String" and (NewChoice.lower() == "yes" or NewChoice.lower() == "no"):
+                if NewChoice.lower() == "yes":
+                    NewBet = PlayerData["Money"]
+                    RolledNumber = random.randint(1, AllInChances["Big Win"])
+
+                    Clear()
+                    ChangePlayerData("Money", -(NewBet))
+
+                    if RolledNumber == AllInChances["Big Win"]:
+                        WinAmount = math.ceil(NewBet * AllInMultipliers["Big Win"])
+
+                        print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
+                        print("• - BIG WIN - •")
+                        print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit - •")
+                        ChangePlayerData("Money", WinAmount)
+                        ChangePlayerData("Wins", 1)
+                        if PlayerData["InsuranceDuration"] >= 1:
+                            ChangePlayerData("InsuranceDuration", -1)
+                        
+                        return "GambleSuccess"
+                    
+                    elif RolledNumber >= AllInChances["Win"]:
+                        WinAmount = math.ceil(NewBet * AllInMultipliers["Win"])
+
+                        print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
+                        print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit - •")
+                        ChangePlayerData("Money", WinAmount)
+                        ChangePlayerData("Wins", 1)
+                        if PlayerData["InsuranceDuration"] >= 1:
+                            ChangePlayerData("InsuranceDuration", -1)
+                        
+                        return "GambleSuccess"
+                    
+                    elif RolledNumber <= AllInChances["Lose"]:
+                        InsuranceChance = random.choice(AllInChances["Insurance"])
+
+                        if PlayerData["InsuranceDuration"] >= 1:
+                            LossAmount = math.ceil(NewBet * (1 - PlayerData["Insurance"]))
+
+                            if InsuranceChance == "Successful":
+                                print("• -", Icons["Lose"], "You Lose", Icons["Lose"], "- •")
+                                print("• - Insurance Was Successful - •")
+                                print("• - You Lost", Icons["Money"], str(format(LossAmount, ",")), "- •")
+
+                                ChangePlayerData("Money", math.ceil(NewBet - LossAmount))
+                            
+                            elif InsuranceChance == "Unsuccessful":
+                                print("• -", Icons["Lose"], "You Lose", Icons["Lose"], "- •")
+                                print("• - Insurance Was Unsuccessful - •")
+                                print("• - You Lost", Icons["Money"], str(format(NewBet, ",")), "- •")
+                                        
+                        else:
+                            print("• -", Icons["Lose"], "You Lose", Icons["Lose"], "- •")
+                            print("• - You Lost", Icons["Money"], str(format(NewBet, ",")), "- •")
+
+                            ChangePlayerData("Money", (NewBet * AllInMultipliers["Lose"]))
+
+                        ChangePlayerData("Losses", 1)
+                        if PlayerData["InsuranceDuration"] >= 1:
+                            ChangePlayerData("InsuranceDuration", -1)
+                
+                elif NewChoice.lower() == "no":
+                    return "GambleSuccess"
+            
+            else:
+                Clear()
+                print("• - Input Must Be 'Yes' Or 'No' - •")
+                return "GambleError"
+        
+        elif PlayerData["Money"] < BetData["Min"]:
+            Clear()
+            print("• - You Must Have At Least", Icons["Money"], str(format(BetData["Min"], ",")), "To Go All In- •")
+            return "GambleError"
 
 def BuyInsurance():
     DiscountAmount = InsuranceShopData["Discounts"]
@@ -2159,6 +2256,82 @@ def BuyInsurance():
         print("• - Insurance [Percentage] Must Be A Number Between 1 And", InsuranceShopData["MaxPercent"], "- •")
         print("• - Insurance [Duration] Must Be A Number Between 1 And", InsuranceShopData["MaxDuration"], "- •")
 
+def BegAction():
+    MainBegData = BegActionData["MainData"]
+    BegMultipliers = BegActionData["Multipliers"]
+    BegChances = BegActionData["Chances"]
+    BegPeople = BegActionData["PeopleType"]
+    BegPhrases = BegActionData["Phrases"]
+
+    Clear()
+
+    print("• - You've Become A Beggar - •")
+    print()
+
+    def PrintBegChance(PersonType, PrintSettings):
+        Counter = 0
+        PersonMultiplier = BegMultipliers[PersonType]
+
+        for NewPersonType in range(len(BegChances)):
+            if BegChances[NewPersonType] == PersonType:
+                Counter += 1
+        
+        PersonChance = Counter / len(BegChances) * 10000 / 100
+        PersonChance = str(PersonChance)
+
+        PersonDecimal = PersonChance.find(".")
+        PersonChance = PersonChance[:(PersonDecimal + 3)]
+
+        if PrintSettings["Chance"] == True and PrintSettings["Range"]:
+            print("• -", PersonType, "[" + Icons["Money"], str(format(PersonMultiplier["Min"], ",")), "-", Icons["Money"], str(format(PersonMultiplier["Max"], ",")) + "] -", PersonChance + "% - •")
+        
+        elif PrintSettings["Chance"] == True and PrintSettings["Range"] == False:
+            print("• -", PersonType, "-", PersonChance + "% - •")
+
+    for i in range(len(BegPeople)):
+        PrintBegChance(BegPeople[i], {"Chance": True, "Range": True})
+    
+    print()
+    input("Press enter to continue: ")
+
+    if PlayerData["Money"] >= MainBegData["MinMoney"] and PlayerData["Money"] <= MainBegData["MaxMoney"]:
+        VisitAmount = random.choice(MainBegData["VisitAmounts"])
+        TotalEarnings = 0
+
+        Clear()
+        print("• - You Were Visited By - •")
+        print()
+
+        for i in range(VisitAmount):
+            VisitedCustomer = random.choice(BegChances)
+            PersonMultiplier = BegMultipliers[VisitedCustomer]
+            TotalEarnings += random.randint(PersonMultiplier["Min"], PersonMultiplier["Max"]) or 0
+            RandomPhrase = ""
+
+            if PersonMultiplier["Max"] == 0:
+                RandomPhrase = random.choice(BegPhrases["Bad"])
+
+            else:
+                RandomPhrase = random.choice(BegPhrases["Good"])
+
+            PrintBegChance(VisitedCustomer, {"Chance": True, "Range": False})
+            print("  • - They Said:", RandomPhrase, "- •")
+        
+        print()
+        print("• - You Earned", Icons["Money"], str(format(TotalEarnings, ",")), "- •")
+
+        ChangePlayerData("Money", TotalEarnings)
+
+        SaveData()
+        return "ActionSuccess"
+    
+    else:
+        Clear()
+        print("• - You Have To Much Money To Beg - •")
+        print("• - You Must Have Between", Icons["Money"], str(format(MainBegData["MinMoney"], ",")), "And", Icons["Money"], str(format(MainBegData["MaxMoney"], ",")), "- •")
+
+        return "ActionSuccess"
+
 def FirstSetup():
     Clear()
     print("• - First Time Setup Initiated - •")
@@ -2197,7 +2370,7 @@ def FirstSetup():
     Clear()
 
 Clear()
-GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, 8: MethodBJ, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "x": HardReset, "k": BuyInsurance, "Methods": [1, 2, 3, 4, 5, 6, 7, 8, 'R', 'K', 'P', 'C', 'S', 'D', "X"]}
+GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, 8: MethodBJ, 9: MethodAllIn, "b": BegAction, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "x": HardReset, "k": BuyInsurance, "Methods": [1, 2, 3, 4, 5, 6, 7, 8, 9, "B", 'R', 'K', 'P', 'C', 'S', 'D', "X"]}
 
 # Setup Check
 
@@ -2291,33 +2464,6 @@ while True:
     if PlayerData["InsuranceDuration"] == 0:
         PlayerData["Insurance"] = 0
     
-    SpecialNotification = False
-    
-    if PlayerData["Money"] <= 50 and PlayerData["SaveFile"] != None:
-        MoneyChance = random.randint(1, 100)
-
-        if MoneyChance >= 75:
-            NewMoney = 10
-
-            if MoneyChance == 100:
-                NewMoney = random.randint(50, 175)
-            
-            elif MoneyChance >= 85:
-                NewMoney = random.randint(25, 100)
-
-            elif MoneyChance >= 75:
-                NewMoney = random.randint(10, 75)
-
-            SpecialNotification = True
-
-            print("• - You Got", Icons["Money"], NewMoney,"- •")
-            print("• - Thank You For Playing - •")
-            print()
-
-            ChangePlayerData("Money", NewMoney)
-
-            SaveData()
-    
     if PlayerData["InsuranceDuration"] == 0 and PlayerData["SaveFile"] != None:
         InsuranceChance = random.randint(1, 100)
         
@@ -2337,8 +2483,6 @@ while True:
                 NewInsurance = (random.randint(2, 10) / 100)
                 NewInsuranceDuration = random.randint(1, 3)
 
-            SpecialNotification = True
-
             InsurancePercentage = str(NewInsurance * 100)
 
             PercentageDecimal = InsurancePercentage.find(".")
@@ -2352,8 +2496,7 @@ while True:
             ChangePlayerData("InsuranceDuration", NewInsuranceDuration)
 
             SaveData()
-        
-        if SpecialNotification == True:
+
             input("Press enter to continue: ")
 
     if PlayerData["SaveFile"] == None or PlayerData["SaveFile"] <= 0 or PlayerData["SaveFile"] >= 6:
@@ -2385,7 +2528,9 @@ while True:
         print("• 🥚 | Egg - 6")
         print("• 📦 | Crates - 7")
         print("• 🃏 | Blackjack - 8")
+        print("•", Icons["Money"], "| All In - 9")
         print("• ❓ | Random - R")
+        print("• 🙏 | Beg - B")
         print("•", Icons["Insurance"], "| Buy Insurance - K")
         print("• 🔁 | Previous Method - P")
         print("• 📁 | Change Save File - C")
@@ -2438,7 +2583,7 @@ while True:
                             (PreviousData["Method"])("Previous")
                 
                 elif DNew == "r":
-                    RandomMethod = random.randint(1, 7)
+                    RandomMethod = random.randint(1, 9)
                     ActionResult = GamblingFunctions[RandomMethod]("New")
 
                 else:
