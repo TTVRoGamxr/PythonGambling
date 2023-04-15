@@ -2070,7 +2070,7 @@ def MethodAllIn(GambleType):
             
     if GambleType == "New":
         if PlayerData["Money"] > BetData["Min"]:
-            PreviousData["Method"] = MethodAllIn
+            PreviousData["Attempts"] = 0
             PrintPlayerData()
             print()
 
