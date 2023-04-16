@@ -14,7 +14,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.6.1", "UpdateLog": ["• Beg Action", "• All In Gamemode", "• Decreased Starting Money", "• Decreased Starting Insurance", "• Fixed Crate Chances", "• Bug Fixes"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.6.2", "UpdateLog": ["• Beg Action", "• All In Gamemode", "• Decreased Starting Money", "• Decreased Starting Insurance", "• Fixed Crate Chances", "• Bug Fixes"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -2098,6 +2098,7 @@ def MethodAllIn(GambleType):
 
                     Clear()
                     ChangePlayerData("Money", -(NewBet))
+                    ChangePlayerData("Spins", 1)
 
                     if RolledNumber == AllInChances["Big Win"]:
                         WinAmount = math.ceil(NewBet * AllInMultipliers["Big Win"])
@@ -2558,7 +2559,6 @@ while True:
             except KeyError as k:
                 Clear()
                 print("• - Invalid Action - •")
-                print(k)
 
             else:
                 pass
