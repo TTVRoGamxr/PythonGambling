@@ -14,7 +14,7 @@ BetData = GameSettings["BetData"]
 
 GamblingActive = False
 
-UpdateData = {"UpdateVersion": "1.6.2", "UpdateLog": ["• Beg Action", "• All In Gamemode", "• Decreased Starting Money", "• Decreased Starting Insurance", "• Fixed Crate Chances", "• Bug Fixes"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
+UpdateData = {"UpdateVersion": "1.7", "UpdateLog": ["• Russian Roulette Gamemode", "• All In Win Increased"], "SpecialShoutouts": ["• CesarTheGamer#2616", "• neji#6958"], "ScriptVersion": 2, "LatestVersion": None}
 
 # Gambling Data
 
@@ -27,7 +27,8 @@ RPSData = {"RPSIcons": {"rock": "🦴", "paper": "📃", "scissors": "✂️ "},
 CupsData = {"CupsIcons": {"WinItem": "💎", "LoseItem": "🕳️"}, "Multipliers": {"Win": 2.25, "Lose": 0}}
 EggsData = {"EggIcons": {"Safe": "🥚", "Bust": "💣"}, "RangeNumbers": {"Exact": 0, "SmallRange": 5, "MainRange": 15}, "Multipliers": {"Exact": 15, "SmallRange": 3.25, "MainRange": 1.75, "BaseRange": 1.35, "Lose": 0}}
 BJData = {"BJIcons": {"BJ": "🃏", "Win": "⭐", "Tie": "🤝", "Bust": "💣"}, "CardRange": {"Min": 1, "Max": 11}, "Multipliers": {"BJ": 3, "Win": 2, "Tie": 0.95, "Lose": 0}}
-AllInData = {"Chances": {"Big Win": 30, "Win": 21, "Lose": 20, "Insurance": ["Successful"]*50 + ["Unsuccessful"]*50}, "Multipliers": {"Big Win": 3.5, "Win": 1.65, "Lose": 0}}
+AllInData = {"Chances": {"Big Win": 30, "Win": 21, "Lose": 20, "Insurance": ["Successful"]*50 + ["Unsuccessful"]*50}, "Multipliers": {"Big Win": 3.5, "Win": 2, "Lose": 0}}
+RussianRouletteData = {"RRIcons": {"Win": "🛟 ", "Lose": "🔫"}, "Chances": {"Win": 10, "Lose": 7}, "Multipliers": {"Win": 3.5, "Lose": 0}}
 CratesData = {1: {"CrateName": "Randomizer Crate", "Cost": 175, "PrintedChances": [], "Items": {1: {"Name": "Stick", "Weight": 100, "Value": 50}, 2: {"Name": "Scrap", "Weight": 75, "Value": 150}, 3: {"Name": "Egg", "Weight": 20, "Value": 200}, 4: {"Name": "Old Coin", "Weight": 4, "Value": 275}, 5: {"Name": "Weathered Medal", "Weight": 1, "Value": 500}}},
               2: {"CrateName": "Basic Old Crate", "Cost": 250, "PrintedChances": [], "Items": {1: {"Name": "Old Rag", "Weight": 120, "Value": 125}, 2: {"Name": "Old Blanket", "Weight": 60, "Value": 200}, 3: {"Name": "Old Jar", "Weight": 45, "Value": 275}, 4: {"Name": "Old Golden Medal", "Weight": 25, "Value": 450}, 5: {"Name": "Old Gold Piece", "Weight": 9, "Value": 600}, 6: {"Name": "Old Gold Bar", "Weight": 1, "Value": 800}}},
               3: {"CrateName": "Riksy Rates Crate", "Cost": 450, "PrintedChances": [], "Items": {1: {"Name": "Counterfeit Coin", "Weight": 150, "Value": 400}, 2: {"Name": "Silver Coin", "Weight": 49, "Value": 650}, 3: {"Name": "Handmade Gold Coin", "Weight": 1, "Value": 2000}}},
@@ -374,6 +375,42 @@ def HardReset():
         Clear()
         print("• - Input Must Be 'Yes' Or 'No' - •")
         return "ActionError"
+
+def ForceHardReset():
+    for i in range(5):
+
+        WrittenStartData = [str(StartingData["Money"]) + ",", str(StartingData["Insurance"]) + ",", str(StartingData["InsuranceDuration"])]
+
+        WriteData = open("C:\PythonGambling\DataSave_" + str(i + 1) + ".txt", "w")
+        WriteData.writelines(WrittenStartData)
+        WriteData.close()
+                
+    WrittenGlobalData = ["0,", "0,", "0"]
+
+    WriteData = open("C:\PythonGambling\GlobalData.txt", "w")
+    WriteData.writelines(WrittenGlobalData)
+    WriteData.close()
+
+                
+    for i in range(11):
+        Clear()
+        print("• - Hard Rest Initiated - •")
+        print()
+        print("      " + LoadingBar[i], str(i * 10) + "%")
+        time.sleep(random.randint(1, 2) / 2)
+                
+    time.sleep(1)
+    Clear()
+
+    PlayerData["SaveFile"] = None
+    PlayerData["Money"] = 0
+    PlayerData["Insurance"] = 0
+    PlayerData['InsuranceDuration'] = 0
+    PlayerData["Spins"] = 0
+    PlayerData["Wins"] = 0
+    PlayerData["Losses"] = 0
+
+    print("• - Hard Reset Complete - •")
 
 def ResetSaveData():
     global PlayerData
@@ -2077,9 +2114,9 @@ def MethodAllIn(GambleType):
             print("• - All In Selected - •")
             print()
 
-            print("• - Big Win • x" + str(AllInMultipliers["Big Win"]), "- •")
-            print("• - Win • x" + str(AllInMultipliers["Win"]), "- •")
-            print("• - Lose • x" + str(AllInMultipliers["Lose"]), "• [50% Chance Insurance Fails]- •")
+            print("Big Win • x" + str(AllInMultipliers["Big Win"]))
+            print("Win • x" + str(AllInMultipliers["Win"]))
+            print("Lose • x" + str(AllInMultipliers["Lose"]), "• [50% Chance Insurance Fails]")
 
             print()
             print("Yes - Continue")
@@ -2089,7 +2126,7 @@ def MethodAllIn(GambleType):
             print("• - Input 'Yes' Or 'No' - •")
             print()
 
-            InputType, NewChoice = CheckInput(input("Would you like bet all " + Icons["Money"] + " " + str(format(PlayerData["Money"], ","))+ " : "))
+            InputType, NewChoice = CheckInput(input("Would you like bet all " + Icons["Money"] + " " + str(format(PlayerData["Money"], ","))+ ": "))
 
             if InputType == "String" and (NewChoice.lower() == "yes" or NewChoice.lower() == "no"):
                 if NewChoice.lower() == "yes":
@@ -2165,6 +2202,140 @@ def MethodAllIn(GambleType):
             Clear()
             print("• - You Must Have At Least", Icons["Money"], str(format(BetData["Min"], ",")), "To Go All In- •")
             return "GambleError"
+
+def MethodRussianRoulette(GambleType):
+    RRIcons = RussianRouletteData["RRIcons"]
+    RRChances = RussianRouletteData["Chances"]
+    RRMultipliers = RussianRouletteData["Multipliers"]
+
+    if GambleType == "New":
+        PrintPlayerData()
+        print()
+
+        print("• - Russian Roulette Selected - •")
+        print()
+
+        print("Win • x" + str(RRMultipliers["Win"]))
+        print("Lose • Force Hard Reset [RESETS ALL DATA]")
+
+        print()
+        print("• - Input A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
+        print()
+        InputType, NewBet = CheckInput(input("How much would you like to bet: "))
+
+        if InputType == "Int":
+            if NewBet <= PlayerData["Money"]:
+                if NewBet >= BetData["Min"] and NewBet <= BetData["Max"]:
+                    RolledNumber = random.randint(1, RRChances["Win"])
+
+                    PreviousData["Method"] = MethodRussianRoulette
+                    PreviousData["Bet"] = NewBet
+                    PreviousData["Attempts"] = 0
+
+                    Clear()
+                    ChangePlayerData("Money", -(NewBet))
+                    ChangePlayerData("Spins", 1)
+
+                    if RolledNumber <= RRChances["Win"] and RolledNumber >= RRChances["Lose"]:
+                        WinAmount = math.ceil(NewBet * RRMultipliers["Win"])
+
+                        print("• -", RRIcons["Win"], "The Gun Was Empty", RRIcons["Win"], "- •")
+                        print()
+
+                        print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
+                        print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit - •")
+                        ChangePlayerData("Money", WinAmount)
+                        ChangePlayerData("Wins", 1)
+                        if PlayerData["InsuranceDuration"] >= 1:
+                            ChangePlayerData("InsuranceDuration", -1)
+                        
+                        return "GambleSuccess"
+
+                    elif RolledNumber <= RRChances["Lose"]:
+                        print("• -", RRIcons["Lose"], "The Gun Was Full", RRIcons["Lose"], "- •")
+                        print()
+
+                        print("• -", Icons["Lose"], "You Lost", Icons["Lose"], "- •")
+
+                        time.sleep(1)
+
+                        ForceHardReset()
+                
+                else:
+                    Clear()
+                    print("• - Bet Must Be A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
+                    return "GambleError"
+            
+            else:
+                Clear()
+                print("• - Bet Must Be Below Your Balance - •")
+                return "GambleError"
+        
+        else:
+            Clear()
+            print("• - Bet Must Be A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
+            print("• - Guess Must Be A Number Between 1 And 100 - •")
+            return "GambleError"
+    
+    elif GambleType == "Previous":
+        InputType = "Int"
+        NewBet = PreviousData["Bet"]
+
+        if InputType == "Int":
+            if NewBet <= PlayerData["Money"]:
+                if NewBet >= BetData["Min"] and NewBet <= BetData["Max"]:
+                    RolledNumber = random.randint(1, RRChances["Win"])
+
+                    PreviousData["Method"] = MethodRussianRoulette
+                    PreviousData["Bet"] = NewBet
+                    PreviousData["Attempts"] += 1
+
+                    Clear()
+                    ChangePlayerData("Money", -(NewBet))
+                    ChangePlayerData("Spins", 1)
+
+                    if RolledNumber <= RRChances["Win"] and RolledNumber >= RRChances["Lose"]:
+                        WinAmount = math.ceil(NewBet * RRMultipliers["Win"])
+
+                        print("• -", RRIcons["Win"], "The Gun Was Empty", RRIcons["Win"], "- •")
+                        print()
+
+                        print("• -", Icons["Win"], "You Won", Icons["Win"], "- •")
+                        print("• - You Earned", Icons["Money"], str(format(WinAmount, ",")), "•", Icons["Money"], str(format(WinAmount - NewBet, ",")), "Profit - •")
+                        ChangePlayerData("Money", WinAmount)
+                        ChangePlayerData("Wins", 1)
+                        if PlayerData["InsuranceDuration"] >= 1:
+                            ChangePlayerData("InsuranceDuration", -1)
+                        
+                        return "GambleSuccess"
+
+                    elif RolledNumber <= RRChances["Lose"]:
+                        print("• -", RRIcons["Lose"], "The Gun Was Full", RRIcons["Lose"], "- •")
+                        print()
+
+                        print("• -", Icons["Lose"], "You Lost", Icons["Lose"], "- •")
+
+                        time.sleep(1)
+
+                        ForceHardReset()
+                
+                else:
+                    Clear()
+                    print("• - Bet Must Be A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
+                    return "GambleError"
+            
+            else:
+                Clear()
+                print("• - Bet Must Be Below Your Balance - •")
+                return "GambleError"
+        
+        else:
+            Clear()
+            print("• - Bet Must Be A Number Between", Icons["Money"], str(format(BetData["Min"], ",")), "And", Icons["Money"], str(format(BetData["Max"], ",")), "- •")
+            print("• - Guess Must Be A Number Between 1 And 100 - •")
+            return "GambleError"
+
+        
 
 def BuyInsurance():
     DiscountAmount = InsuranceShopData["Discounts"]
@@ -2372,7 +2543,7 @@ def FirstSetup():
     Clear()
 
 Clear()
-GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, 8: MethodBJ, 9: MethodAllIn, "b": BegAction, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "x": HardReset, "k": BuyInsurance, "Methods": [1, 2, 3, 4, 5, 6, 7, 8, 9, "B", 'R', 'K', 'P', 'C', 'S', 'D', "X"]}
+GamblingFunctions = {1: MethodDice, 2: MethodSlots, 3: MethodCoinflip, 4: MethodRPS, 5: MethodCups, 6: MethodEgg, 7: MethodCrates, 8: MethodBJ, 9: MethodAllIn, 10: MethodRussianRoulette, "b": BegAction, "c": SetSaveFile, "s": SaveData, "d": ResetSaveData, "x": HardReset, "k": BuyInsurance, "Methods": [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, "B", 'R', 'K', 'P', 'C', 'S', 'D', "X"]}
 
 # Setup Check
 
@@ -2531,6 +2702,7 @@ while True:
         print("• 📦 | Crates - 7")
         print("• 🃏 | Blackjack - 8")
         print("•", Icons["Money"], "| All In - 9")
+        print("• 🔫 | Russian Roulette - 10")
         print("• ❓ | Random - R")
         print("• 🙏 | Beg - B")
         print("•", Icons["Insurance"], "| Buy Insurance - K")
